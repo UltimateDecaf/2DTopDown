@@ -9,14 +9,17 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidbody;
     [SerializeField] private float speed;
     private Vector2 movementVector;
+    Quaternion rotation;
 
     public InputActionAsset playerInput;
     public InputAction moveAction;
-
+    public InputAction lookAction;
+    public Vector3 mousePos;
     // Start is called before the first frame update
     private void Awake()
     {
         moveAction = playerInput.FindActionMap("Player").FindAction("Move");
+        lookAction = playerInput.FindActionMap("Player").FindAction("Look");
         rigidbody = GetComponent<Rigidbody2D>();
      
     }
@@ -24,18 +27,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
-        movementVector = moveVector.normalized;
         rigidbody.velocity = moveVector * speed;
+        
+       
     }
 
-   /* private void OnEnable()
+ /*  private void RotateToCursorPosition()
     {
-        playerInput.FindActionMap("Player").Enable();
-    }
+        mousePos = Input.mousePosition;
+        rotation = Quaternion.LookRotation(mousePos, Vector3.up);
+        transform.rotation = rotation;
 
-    private void OnDisable()
-    {
-        playerInput.FindActionMap("Player").Disable();
     }
-   */
+ */
 }
