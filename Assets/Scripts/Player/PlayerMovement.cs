@@ -15,29 +15,44 @@ public class PlayerMovement : MonoBehaviour
     public InputAction moveAction;
     public InputAction lookAction;
     public Vector3 mousePos;
+    private Camera mainCamera;
+    private Vector3 objectPosition;
     // Start is called before the first frame update
     private void Awake()
     {
         moveAction = playerInput.FindActionMap("Player").FindAction("Move");
-        lookAction = playerInput.FindActionMap("Player").FindAction("Look");
+
         rigidbody = GetComponent<Rigidbody2D>();
-     
+        rotation = Quaternion.identity;
+        mainCamera = Camera.main;
     }
 
     private void FixedUpdate()
     {
-        Vector2 moveVector = moveAction.ReadValue<Vector2>();
-        rigidbody.velocity = moveVector * speed;
-        
-       
+        MovePlayer();
+        RotateToCursorPosition();
+
     }
 
- /*  private void RotateToCursorPosition()
+   private void RotateToCursorPosition()
     {
         mousePos = Input.mousePosition;
-        rotation = Quaternion.LookRotation(mousePos, Vector3.up);
-        transform.rotation = rotation;
+        mousePos.z = 0;
+
+        objectPosition = mainCamera.WorldToScreenPoint(transform.position);
+        mousePos.x = mousePos.x - objectPosition.x;
+        mousePos.y = mousePos.y - objectPosition.y; 
+
+        float angleToRotate = (Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg) - 90;
+        
+        transform.rotation = Quaternion.Euler(new Vector3(0,0,angleToRotate));
 
     }
- */
+
+    private void MovePlayer()
+    {
+        Vector2 moveVector = moveAction.ReadValue<Vector2>();
+        rigidbody.velocity = moveVector * speed;
+    }
+ 
 }
