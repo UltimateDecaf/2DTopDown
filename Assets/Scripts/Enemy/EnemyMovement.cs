@@ -29,19 +29,21 @@ public class EnemyMovement : MonoBehaviour
 
     Vector2 GetCurrentPlayerPosition() 
     { 
-        return player.transform.position;
+        return new Vector2(player.transform.position.x, player.transform.position.y);
     }
 
     private void MoveEnemy()
     {
-        Vector2 moveVector = new Vector2(currentPlayerPosition.x, currentPlayerPosition.y);
+        Vector2 moveVector = new Vector2(currentPlayerPosition.x - transform.position.x, currentPlayerPosition.y - transform.position.y);
         rigidbody.velocity = moveVector * speed;
     }
 
     private void RotateToPlayer()
     {
-
-        float angleToRotate = (Mathf.Atan2(currentPlayerPosition.y, currentPlayerPosition.x) * Mathf.Rad2Deg) - 90;
+        Vector2 playerPos = GetCurrentPlayerPosition();
+        playerPos.x = playerPos.x - transform.position.x;
+        playerPos.y = playerPos.y  - transform.position.y;
+        float angleToRotate = (Mathf.Atan2(playerPos.y , playerPos.x) * Mathf.Rad2Deg) - 180;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToRotate));
     }
 
