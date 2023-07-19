@@ -59,5 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
- 
+    public Vector2 GetPlayerPosition() 
+    {
+        return transform.position;
+    }
 }
