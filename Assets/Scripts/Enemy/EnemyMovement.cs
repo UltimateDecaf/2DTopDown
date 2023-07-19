@@ -43,7 +43,7 @@ public class EnemyMovement : MonoBehaviour
         Vector2 playerPos = GetCurrentPlayerPosition();
         playerPos.x = playerPos.x - transform.position.x;
         playerPos.y = playerPos.y  - transform.position.y;
-        float angleToRotate = (Mathf.Atan2(playerPos.y , playerPos.x) * Mathf.Rad2Deg) - 180;
+        float angleToRotate = (Mathf.Atan2(playerPos.y , playerPos.x) * Mathf.Rad2Deg);
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToRotate));
     }
 
