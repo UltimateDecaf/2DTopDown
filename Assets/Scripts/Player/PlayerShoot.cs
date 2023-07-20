@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float speed;
+    [SerializeField] private Transform pointerOffset;
 
     public InputActionAsset playerInput;
     public InputAction fireAction;
@@ -19,8 +20,6 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         fireAction = playerInput.FindActionMap("Player").FindAction("Fire");
-        rigidbody = GetComponent<Rigidbody2D>();
-        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -34,22 +33,11 @@ public class PlayerShoot : MonoBehaviour
 
     public void Fire()
     {
-        float angleToRotateBullet = CalculateAngleToRotate();
-        Instantiate(bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, angleToRotateBullet - 90)), transform);
-        rigidbody.velocity = new Vector2(transform.position.x * speed, transform.position.y * speed);
+       // float angleToRotateBullet = CalculateAngleToRotate();
+        GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, transform.rotation);
+        Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
+        rigidbody.velocity = speed * transform.up * Time.deltaTime;
 
     }
 
-    private float CalculateAngleToRotate()
-    {
-        mousePos = Input.mousePosition;
-        mousePos.z = 0;
-
-        playerPosition = mainCamera.WorldToScreenPoint(transform.position);
-        mousePos.x = mousePos.x - playerPosition.x;
-        mousePos.y = mousePos.y - playerPosition.y;
-
-        float angleToRotate = (Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg) - 90;
-        return angleToRotate;
-    }
 }

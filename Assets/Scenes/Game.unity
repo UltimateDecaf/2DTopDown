@@ -1740,7 +1740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8331e3eca9c6e0c48888f0b73004c186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 1
   playerInput: {fileID: -944628639613478452, guid: 5059cdbfbdb3b374fb7725e531e718b9, type: 3}
   moveAction:
     m_Name: Move
@@ -1794,8 +1794,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744a7a351a75e084c9c8a2bc71b8815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2039152744140043068, guid: da10e2d03475d3546b7a2019e2d77ac3, type: 3}
-  speed: 5
+  bulletPrefab: {fileID: 2039152744140043068, guid: da10e2d03475d3546b7a2019e2d77ac3, type: 3}
+  speed: 500
+  pointerOffset: {fileID: 609631538}
   playerInput: {fileID: -944628639613478452, guid: 5059cdbfbdb3b374fb7725e531e718b9, type: 3}
   fireAction:
     m_Name: Fire
