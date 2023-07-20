@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
     [SerializeField] private float speed;
 
+    private GameObject player;
     private Rigidbody2D rigidbody;
     private Vector2 currentPlayerPosition;
 
@@ -16,6 +17,7 @@ public class EnemyMovement : MonoBehaviour
     {
         currentPlayerPosition = Vector2.zero;
         rigidbody = GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame

@@ -6,22 +6,27 @@ public class EnemySpawner : MonoBehaviour
 {
 
     [SerializeField] GameObject enemy;
+    [SerializeField] float spawnTime;
     // Start is called before the first frame update
     void Start()
+    {
+        StartCoroutine("SpawnEnemies");
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
-       StartCoroutine("SpawnEnemies");
-    }
-
     IEnumerator SpawnEnemies()
     {
-        Instantiate(enemy); 
-        yield return new WaitForSeconds(5);
+        while (true)
+        {
+            Instantiate(enemy, this.transform);
+            yield return new WaitForSeconds(spawnTime);
+        }
+        
 
     }
 }
