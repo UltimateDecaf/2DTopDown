@@ -39,14 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
    private void RotateToCursorPosition()
     {
-        mousePos = Input.mousePosition;
-        mousePos.z = 0;
-
-        objectPosition = mainCamera.WorldToScreenPoint(transform.position);
-        mousePos.x = mousePos.x - objectPosition.x;
-        mousePos.y = mousePos.y - objectPosition.y; 
-
-        float angleToRotate = (Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg) - 90;
+        float angleToRotate = CalculateAngleToRotate();
         transform.rotation = Quaternion.Euler(new Vector3(0,0,angleToRotate));
 
     } 
@@ -62,5 +55,18 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 GetPlayerPosition() 
     {
         return transform.position;
+    }
+
+    public float CalculateAngleToRotate()
+    {
+        mousePos = Input.mousePosition;
+        mousePos.z = 0;
+
+        objectPosition = mainCamera.WorldToScreenPoint(transform.position);
+        mousePos.x = mousePos.x - objectPosition.x;
+        mousePos.y = mousePos.y - objectPosition.y;
+
+        float angleToRotate = (Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg) - 90;
+        return angleToRotate;
     }
 }
