@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
         currentPlayerPosition = GetCurrentPlayerPosition();
         MoveEnemy();
         RotateToPlayer();
-        Debug.Log("Player now at x: " + currentPlayerPosition.x + " y: " + currentPlayerPosition.y);
+      //  Debug.Log("Player now at x: " + currentPlayerPosition.x + " y: " + currentPlayerPosition.y);
     }
 
     Vector2 GetCurrentPlayerPosition() 

@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         return transform.position;
     }
 
-    public float CalculateAngleToRotate()
+    private float CalculateAngleToRotate()
     {
         mousePos = Input.mousePosition;
         mousePos.z = 0;

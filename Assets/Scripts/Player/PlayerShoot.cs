@@ -34,10 +34,20 @@ public class PlayerShoot : MonoBehaviour
     public void Fire()
     {
        // float angleToRotateBullet = CalculateAngleToRotate();
-        GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, pointerOffset.rotation);
         Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
         rigidbody.velocity = speed * transform.up * Time.deltaTime;
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    { 
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit");
+            Destroy(collision.gameObject);
+        }
+        
     }
 
 }
