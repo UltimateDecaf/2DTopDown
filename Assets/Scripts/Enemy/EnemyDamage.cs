@@ -21,7 +21,8 @@ public class EnemyDamage : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            health.ReceiveDamage(damage);
+            GameObject gameObject = collision.gameObject;
+            gameObject.SendMessage("GiveDamage", 5);
         }
     }
 }
