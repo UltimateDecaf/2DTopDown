@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -2507662802416931134}
   m_Layer: 3
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Shootable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8a5756dd73ed847831c002be8d6931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 1
 --- !u!50 &3600185048828534355
 Rigidbody2D:
   serializedVersion: 4
@@ -227,7 +227,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 200
+  m_Mass: 2000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

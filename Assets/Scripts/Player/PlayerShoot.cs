@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,10 +17,13 @@ public class PlayerShoot : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 playerPosition;
     private Camera mainCamera;
+
+    //mouse position for raycasting
     // Start is called before the first frame update
     void Start()
     {
         fireAction = playerInput.FindActionMap("Player").FindAction("Fire");
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -33,14 +37,23 @@ public class PlayerShoot : MonoBehaviour
 
     public void Fire()
     {
-        //PREVIOUS IMPLEMENTATION)
+        //PREVIOUS IMPLEMENTATION
         /* GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, pointerOffset.rotation);
         Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
         rigidbody.velocity = speed * transform.up * Time.deltaTime; */
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(pointerOffset.position.x, pointerOffset.position.y), Vector2.up);
-        if(hit.collider != null)
+        Vector3 playerGunPosition = pointerOffset.position;
+        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = playerGunPosition.z;
+        Vector3 shootDirection = mousePosition - playerGunPosition;
+        shootDirection.Normalize();
+
+        RaycastHit2D hit = Physics2D.Raycast(playerGunPosition, shootDirection, 1000f);
+        Debug.DrawRay(playerGunPosition, shootDirection * 1000f, Color.red, 1f);
+        if (hit.collider.CompareTag("Shootable"))
         {
-            Destroy(hit.collider.gameObject);
+            hit.collider.gameObject.SendMessage("GiveDamage", 5);
+            Debug.Log("Damage received -5");
+        
         }
 
     }
