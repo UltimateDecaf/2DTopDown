@@ -20,10 +20,28 @@ public class Bullet : MonoBehaviour
     {
         if (!(collision.gameObject.CompareTag("Player")))
         {
-            GameObject gameObject = collision.gameObject;
-            gameObject.SendMessage("GiveDamage", 10);
+            GameObject affectedGameObject = collision.gameObject;
+            affectedGameObject.SendMessage("GiveDamage", 10);
             Destroy(this.gameObject);
+
+            //changes the color when the bullet hits the object
+            SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.white;
+            Debug.Log(spriteRenderer.color);
+
+
+
         }
 
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        GameObject affectedGameObject = collision.gameObject;
+
+        //changes the color when the bullet hits the object
+        SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = new Color32(166,7,7, 255);
+        Debug.Log(spriteRenderer.color);
     }
 }

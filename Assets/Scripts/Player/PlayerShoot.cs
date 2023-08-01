@@ -38,10 +38,11 @@ public class PlayerShoot : MonoBehaviour
     public void Fire()
     {
         //PREVIOUS IMPLEMENTATION
-        /* GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, pointerOffset.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, pointerOffset.position, pointerOffset.rotation);
         Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-        rigidbody.velocity = speed * transform.up * Time.deltaTime; */
-        Vector3 playerGunPosition = pointerOffset.position;
+        rigidbody.velocity = speed * transform.up * Time.deltaTime; 
+       
+        /* Vector3 playerGunPosition = pointerOffset.position;
         Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = playerGunPosition.z;
         Vector3 shootDirection = mousePosition - playerGunPosition;
@@ -54,7 +55,7 @@ public class PlayerShoot : MonoBehaviour
             hit.collider.gameObject.SendMessage("GiveDamage", 5);
             Debug.Log("Damage received -5");
         
-        }
+        } */
 
     }
 
