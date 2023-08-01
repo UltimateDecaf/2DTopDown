@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        player = GetComponent<GameObject>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,8 +23,7 @@ public class Bullet : MonoBehaviour
         {
             GameObject affectedGameObject = collision.gameObject;
             affectedGameObject.SendMessage("GiveDamage", 10);
-            Destroy(this.gameObject);
-
+            player.SendMessage("AddToScore", 15);
             //changes the color when the bullet hits the object
             SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.white;
@@ -37,11 +37,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        GameObject affectedGameObject = collision.gameObject;
+        if (!(collision.gameObject.CompareTag("Player"))) 
+        {
+           GameObject affectedGameObject = collision.gameObject;
 
-        //changes the color when the bullet hits the object
-        SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color32(166,7,7, 255);
-        Debug.Log(spriteRenderer.color);
+           //changes the color when the bullet hits the object
+           SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
+           spriteRenderer.color = new Color32(166, 7, 7, 255);
+            Destroy(this.gameObject);
+            Debug.Log(spriteRenderer.color);
+        }
+    
     }
 }
