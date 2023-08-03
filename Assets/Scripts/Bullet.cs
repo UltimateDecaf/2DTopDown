@@ -24,7 +24,8 @@ public class Bullet : MonoBehaviour
         {
             GameObject affectedGameObject = collision.gameObject;
             affectedGameObject.SendMessage("GiveDamage", 10);
-            GameManager.Instance.AddScore(10);
+            int scoreToAdd = Random.Range(5, 11);
+            GameManager.Instance.AddScore(scoreToAdd);
             //changes the color when the bullet hits the object
             SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.white;
@@ -32,6 +33,9 @@ public class Bullet : MonoBehaviour
 
 
 
+        } else if (collision.gameObject.CompareTag("GameBoundary"))
+        {
+            Destroy(this.gameObject);
         }
 
     }
