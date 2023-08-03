@@ -5,19 +5,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private TextMeshProUGUI scoreUI;
-    private int score;
+
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateScoreUI();    
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,7 +24,7 @@ public class Bullet : MonoBehaviour
         {
             GameObject affectedGameObject = collision.gameObject;
             affectedGameObject.SendMessage("GiveDamage", 10);
-            AddToScore(15);
+            GameManager.Instance.AddScore(10);
             //changes the color when the bullet hits the object
             SpriteRenderer spriteRenderer = affectedGameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.white;
@@ -51,16 +49,5 @@ public class Bullet : MonoBehaviour
             Debug.Log(spriteRenderer.color);
         }
     
-    }
-
-    public void AddToScore(int scoreToAdd)
-    {
-        score += scoreToAdd;
-        Debug.Log("Method Called - current score is " + score);
-    }
-
-    public void UpdateScoreUI()
-    {
-        scoreUI.text = "Score: " + score;
     }
 }
