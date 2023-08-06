@@ -147,8 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a7d4649ac59c546a4911d3a9dc0a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 709896868762687879, guid: c1ebf80edc3bdec48b30787ab8ea4c5e, type: 3}
-  scoreUI: {fileID: 0}
 --- !u!1 &2903008215792163495
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +221,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.07
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
