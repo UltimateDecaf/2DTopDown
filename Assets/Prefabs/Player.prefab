@@ -104,12 +104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
+  SyncPositionX: 0
+  SyncPositionY: 0
+  SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 0
+  SyncRotAngleZ: 1
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0
@@ -201,18 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8331e3eca9c6e0c48888f0b73004c186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: 989c961ac3556c14ca352540b9da82af, type: 2}
+  playerLegs: {fileID: 3131544130824745405}
+  rb: {fileID: 709896868762687878}
   speed: 7
-  playerInput: {fileID: -944628639613478452, guid: 5059cdbfbdb3b374fb7725e531e718b9, type: 3}
-  moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: Axis
-    m_Id: 70715efe-5590-460e-833e-546e14c4a93f
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  mousePos: {x: 0, y: 0, z: 0}
 --- !u!114 &709896868762687884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6869504603815596307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.26, z: 0}
+  m_LocalPosition: {x: 0, y: -0.144, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

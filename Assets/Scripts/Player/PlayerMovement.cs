@@ -1,72 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
-    private Rigidbody2D rigidbody;
+ 
+    [SerializeField] private InputReader inputReader;
+    [SerializeField] private Transform playerLegs;
+    [SerializeField] private Rigidbody2D rb;
+
     [SerializeField] private float speed;
-    private Vector2 smoothedMoveVector;
-    private Vector2 currentVelocity;
-    Quaternion rotation;
 
-    public InputActionAsset playerInput;
-    public InputAction moveAction;
+    private Vector2 lastMoveInput;
 
-
-    public Vector3 mousePos;
-    private Camera mainCamera;
-    private Vector3 objectPosition;
-    // Start is called before the first frame update
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
-        moveAction = playerInput.FindActionMap("Player").FindAction("Move");
+        if (!IsOwner) {  return; }
 
+        inputReader.MoveEvent += HandleMove;
+    }
 
-        rigidbody = GetComponent<Rigidbody2D>();
-        rotation = Quaternion.identity;
-        mainCamera = Camera.main;
+    public override void OnNetworkDespawn()
+    {
+        if (!IsOwner) { return; }
+        inputReader.MoveEvent -= HandleMove;
+    }
+
+    private void Update()
+    {
+        if (!IsOwner) { return; }
+
+      float targetAngle = Mathf.Atan2(lastMoveInput.y, lastMoveInput.x) * Mathf.Rad2Deg - 90f;
+      playerLegs.eulerAngles = new Vector3(0f, 0f, targetAngle);
     }
 
     private void FixedUpdate()
     {
-       MovePlayer();
-       RotateToCursorPosition();
+
+
+      if(!IsOwner) { return; }
+       rb.velocity = speed * lastMoveInput;
 
     }
 
-   private void RotateToCursorPosition()
+    public void HandleMove(Vector2 moveInput)
     {
-        float angleToRotate = CalculateAngleToRotate();
-        transform.rotation = Quaternion.Euler(new Vector3(0,0,angleToRotate));
-
-    } 
-
-    private void MovePlayer()
-    {
-        Vector2 moveVector = moveAction.ReadValue<Vector2>();
-        smoothedMoveVector = Vector2.SmoothDamp(smoothedMoveVector, moveVector, ref currentVelocity, 0.2f);
-        rigidbody.velocity = smoothedMoveVector * speed;
-
-    }
-
-    public Vector2 GetPlayerPosition() 
-    {
-        return transform.position;
-    }
-
-    private float CalculateAngleToRotate()
-    {
-        mousePos = Input.mousePosition;
-        mousePos.z = 0;
-
-        objectPosition = mainCamera.WorldToScreenPoint(transform.position);
-        mousePos.x = mousePos.x - objectPosition.x;
-        mousePos.y = mousePos.y - objectPosition.y;
-
-        float angleToRotate = (Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg) - 90;
-        return angleToRotate;
+        lastMoveInput = moveInput;
     }
 }
