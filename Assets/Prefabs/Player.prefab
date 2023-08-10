@@ -46,8 +46,8 @@ GameObject:
   - component: {fileID: 709896868762687878}
   - component: {fileID: 709896868762687885}
   - component: {fileID: 709896868762687874}
-  - component: {fileID: 709896868762687884}
   - component: {fileID: 709896868762687887}
+  - component: {fileID: -5568698617447710396}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -205,31 +205,6 @@ MonoBehaviour:
   playerLegs: {fileID: 3131544130824745405}
   rb: {fileID: 709896868762687878}
   speed: 7
---- !u!114 &709896868762687884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 709896868762687879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744a7a351a75e084c9c8a2bc71b8815b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2721922284303510630, guid: da10e2d03475d3546b7a2019e2d77ac3, type: 3}
-  speed: 3000
-  pointerOffset: {fileID: 709896868407928164}
-  playerInput: {fileID: -944628639613478452, guid: 5059cdbfbdb3b374fb7725e531e718b9, type: 3}
-  fireAction:
-    m_Name: Fire
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4a43b325-19f1-469c-a818-e5ce9029dc82
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!114 &709896868762687887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +219,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   healthField: {fileID: 0}
+--- !u!114 &-5568698617447710396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709896868762687879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91bfa6e7f0c7f345b47053eed92417b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBody: {fileID: 3988986458098616008}
+  inputReader: {fileID: 11400000, guid: 989c961ac3556c14ca352540b9da82af, type: 2}
 --- !u!1 &1989436199212679008
 GameObject:
   m_ObjectHideFlags: 0

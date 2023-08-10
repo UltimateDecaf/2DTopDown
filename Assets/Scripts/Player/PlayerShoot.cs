@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
+    /*
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float speed;
     [SerializeField] private Transform pointerOffset;
@@ -55,8 +56,8 @@ public class PlayerShoot : MonoBehaviour
             hit.collider.gameObject.SendMessage("GiveDamage", 5);
             Debug.Log("Damage received -5");
         
-        } */
+        } 
 
-    }
+    } */
 
 }
