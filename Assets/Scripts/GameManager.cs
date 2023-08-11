@@ -10,24 +10,24 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI scoreUI;
     private int score;
-    [SerializeField] private GameObject player;
+   // [SerializeField] private GameObject player;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private TextMeshProUGUI finalScore;
-    private Health playerHealth;
+   // private Health playerHealth;
 
     void Awake()
     {
         Instance = this;
         score = 0;
         UpdateScoreUI();
-        playerHealth = player.GetComponent<Health>();
+       // playerHealth = player.GetComponent<Health>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckPlayerHealth(playerHealth.GetHealth());
+       // CheckPlayerHealth(playerHealth.GetHealth());
     }
 
     public void AddScore(int scoreToAdd)
@@ -41,12 +41,4 @@ public class GameManager : MonoBehaviour
         scoreUI.text = "Score: " + score;
     }
 
-    private void CheckPlayerHealth(int currentHealth)
-    {
-        if(currentHealth <= 0)
-        {
-            gameOverScreen.SetActive(true);
-            finalScore.text = "Final score: " + score; 
-        }
-    }
 }
