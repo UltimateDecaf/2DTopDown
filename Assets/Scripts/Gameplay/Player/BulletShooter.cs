@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class BulletShooter : NetworkBehaviour
 {
+
+    //bullets do not render properly on the host's side!!!
+
     [Header("References")]
     [SerializeField] private InputReader inputReader;
     [SerializeField] private Transform bulletSpawnPoint;
@@ -37,7 +40,7 @@ public class BulletShooter : NetworkBehaviour
 
         if (!shouldFire) { return; }
 
-        if (Time.time < (1 / fireRate + previousFireTime)) { return; }
+        if (Time.time < (1 / fireRate) + previousFireTime) { return; }
 
         FireServerRpc(bulletSpawnPoint.position, bulletSpawnPoint.up);
 
@@ -57,9 +60,14 @@ public class BulletShooter : NetworkBehaviour
 
         bulletInstance.transform.up = direction;
 
-        Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());
+       // Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());
+        
+        if (bulletInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            rb.velocity = rb.transform.up * bulletSpeed;
+        }
 
-        SpawnDummyBulletClientRpc(bulletSpawnPoint.position, bulletSpawnPoint.up);
+        SpawnDummyBulletClientRpc(spawnPosition, direction);
     }
 
     [ClientRpc]
@@ -75,15 +83,11 @@ public class BulletShooter : NetworkBehaviour
 
         bulletInstance.transform.up = direction;
 
-        Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());   
+     //   Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());   
 
         if(bulletInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
             rb.velocity = rb.transform.up * bulletSpeed;
-        }
-        else
-        {
-            Debug.Log("Ooopsie!");
         }
     }
 }

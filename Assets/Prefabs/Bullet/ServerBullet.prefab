@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4971858256703084067, guid: 18f890350e875774d9a8c99e6c32528e, type: 3}
       propertyPath: m_Name
-      value: BulletBase
+      value: ServerBullet
       objectReference: {fileID: 0}
     - target: {fileID: 6218859845830425550, guid: 18f890350e875774d9a8c99e6c32528e, type: 3}
       propertyPath: m_RootOrder
