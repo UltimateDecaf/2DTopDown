@@ -60,7 +60,11 @@ public class BulletShooter : NetworkBehaviour
 
         bulletInstance.transform.up = direction;
 
-       // Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());
+
+        if(bulletInstance.TryGetComponent<DamageOnContact>(out DamageOnContact damageOnContact)){
+            damageOnContact.SetOwner(OwnerClientId);
+        }
         
         if (bulletInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
@@ -83,7 +87,7 @@ public class BulletShooter : NetworkBehaviour
 
         bulletInstance.transform.up = direction;
 
-     //   Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());   
+        Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());   
 
         if(bulletInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {

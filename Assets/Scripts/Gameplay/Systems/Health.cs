@@ -34,7 +34,7 @@ public class Health : NetworkBehaviour
 
     public void ModifyHealth(int value)
     {
-        if (!isDead) { return; }
+        if (isDead) { return; }
 
         int newHealth = CurrentHealth.Value + value;
         CurrentHealth.Value = Mathf.Clamp(newHealth, 0, MaxHealth);
