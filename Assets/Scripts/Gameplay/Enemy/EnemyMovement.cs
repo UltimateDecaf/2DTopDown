@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
     {
         currentPlayerPosition = Vector2.zero;
         rigidbody = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player(Clone)");
     }
 
     // Update is called once per frame
@@ -46,7 +46,7 @@ public class EnemyMovement : MonoBehaviour
         playerPos.x = playerPos.x - transform.position.x;
         playerPos.y = playerPos.y  - transform.position.y;
         float angleToRotate = (Mathf.Atan2(playerPos.y , playerPos.x) * Mathf.Rad2Deg);
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToRotate));
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToRotate - 90));
     }
 
 
