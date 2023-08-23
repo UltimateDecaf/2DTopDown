@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : NetworkBehaviour
 {
     [SerializeField] private float speed;
 
     private GameObject player;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
     private Vector2 currentPlayerPosition;
 
 
@@ -16,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
     void Awake()
     {
         currentPlayerPosition = Vector2.zero;
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player(Clone)");
     }
 
@@ -37,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
     private void MoveEnemy()
     {
         Vector2 moveVector = new Vector2(currentPlayerPosition.x - transform.position.x, currentPlayerPosition.y - transform.position.y);
-        rigidbody.velocity = moveVector * speed;
+        rb.velocity = moveVector * speed;
     }
 
     private void RotateToPlayer()

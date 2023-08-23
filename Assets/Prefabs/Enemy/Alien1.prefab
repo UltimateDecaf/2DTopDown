@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 1402016279995899200}
   - component: {fileID: -9118739357133013999}
   - component: {fileID: -287143839853471}
+  - component: {fileID: 3446777640443918978}
   m_Layer: 0
   m_Name: Alien1
   m_TagString: Untagged
@@ -450,7 +451,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8a5756dd73ed847831c002be8d6931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.01
+--- !u!114 &3446777640443918978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6882431873035988769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &8151235880168927383
 GameObject:
   m_ObjectHideFlags: 0
