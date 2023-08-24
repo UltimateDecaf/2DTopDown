@@ -49,7 +49,12 @@ public class HostGameManager
         transport.SetRelayServerData(relayServerData);
         networkServer = new NetworkServer(NetworkManager.Singleton);
 
-        PlayerData playerData = new PlayerData(PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"), AuthenticationService.Instance.PlayerId);
+        PlayerData playerData = new PlayerData
+        {
+            playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"),
+            playerAuthId = AuthenticationService.Instance.PlayerId
+        };
+
         string payload = JsonUtility.ToJson(playerData);
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 

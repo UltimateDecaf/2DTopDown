@@ -4,10 +4,10 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NetworkClient 
+public class NetworkClient
 {
     private NetworkManager networkManager;
-   
+
     public NetworkClient(NetworkManager networkManager)
     {
         this.networkManager = networkManager;
@@ -15,12 +15,13 @@ public class NetworkClient
         networkManager.OnClientDisconnectCallback += OnClientDisconnect;
     }
 
- 
+
     private void OnClientDisconnect(ulong clientId)
     {
-      if(clientId == 0 && clientId == networkManager.LocalClientId)
-      {
-            if(SceneManager.GetActiveScene().name != "Menu") 
+        if (clientId == 0 || clientId == networkManager.LocalClientId)
+        {
+
+            if (SceneManager.GetActiveScene().name != "Menu")
             {
                 SceneManager.LoadScene("Menu");
             }
@@ -30,6 +31,6 @@ public class NetworkClient
                 networkManager.Shutdown();
 
             }
-      }
+        }
     }
 }
