@@ -15,10 +15,11 @@ public class Health : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsServer) { return; }
-
-        CurrentHealth.Value = MaxHealth;
-        OnDie += EnemyDie;
+        if (IsServer)
+        {
+            CurrentHealth.Value = MaxHealth;
+            OnDie += EnemyDie;
+        }
     }
 
     private void EnemyDie(Health health)
@@ -43,15 +44,16 @@ public class Health : NetworkBehaviour
 
     public void ModifyHealth(int value)
     {
-        if (isDead) { return; }
-
-        int newHealth = CurrentHealth.Value + value;
-        CurrentHealth.Value = Mathf.Clamp(newHealth, 0, MaxHealth);
-        if(CurrentHealth.Value == 0) 
+        if (!isDead)
         {
-            OnDie?.Invoke(this);
-            isDead = true;
+            int newHealth = CurrentHealth.Value + value;
+            CurrentHealth.Value = Mathf.Clamp(newHealth, 0, MaxHealth);
+            if (CurrentHealth.Value == 0)
+            {
+                OnDie?.Invoke(this);
+                isDead = true;
 
+            }
         }
     }
 }

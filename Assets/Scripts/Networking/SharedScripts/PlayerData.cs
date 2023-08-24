@@ -7,9 +7,11 @@ using UnityEngine;
 public class PlayerData 
 {
     public string playerName;
+    public string playerAuthId;
 
-    public PlayerData(string playerName)
+    public PlayerData(string playerName, string playerAuthId)
     {
         this.playerName = playerName;
+        this.playerAuthId = playerAuthId;
     }
 }

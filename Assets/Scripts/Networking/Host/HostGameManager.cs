@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
@@ -34,6 +36,7 @@ public class HostGameManager
         {
             joinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
             Debug.Log(joinCode);
+
         }
         catch (Exception exception)
         {
@@ -46,7 +49,7 @@ public class HostGameManager
         transport.SetRelayServerData(relayServerData);
         networkServer = new NetworkServer(NetworkManager.Singleton);
 
-        PlayerData playerData = new PlayerData(PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"));
+        PlayerData playerData = new PlayerData(PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"), AuthenticationService.Instance.PlayerId);
         string payload = JsonUtility.ToJson(playerData);
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 
@@ -56,5 +59,9 @@ public class HostGameManager
         NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
     }
 
+    public string GetJoinCode()
+    {
+        return joinCode;
+    }
 
 }
