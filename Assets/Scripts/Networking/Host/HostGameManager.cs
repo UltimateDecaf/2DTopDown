@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -16,6 +17,7 @@ public class HostGameManager
     private string joinCode;
     private const int MaxConnections = 4;
     private const string GameSceneName = "Game";
+    private NetworkServer networkServer;
   public async Task StartHostAsync()
     {
         try
@@ -42,7 +44,13 @@ public class HostGameManager
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         RelayServerData relayServerData = new RelayServerData(allocation, "udp");
         transport.SetRelayServerData(relayServerData);
+        networkServer = new NetworkServer(NetworkManager.Singleton);
 
+        PlayerData playerData = new PlayerData(PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"));
+        string payload = JsonUtility.ToJson(playerData);
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
+
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
         NetworkManager.Singleton.StartHost();
 
         NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);

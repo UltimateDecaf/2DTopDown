@@ -18,6 +18,15 @@ public class Health : NetworkBehaviour
         if (!IsServer) { return; }
 
         CurrentHealth.Value = MaxHealth;
+        OnDie += EnemyDie;
+    }
+
+    private void EnemyDie(Health health)
+    {
+        if(CurrentHealth.Value <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame

@@ -10,10 +10,11 @@ public class PlayerAim : NetworkBehaviour
 
     private void LateUpdate()
     {
-        if (!IsOwner) { return; }
-
-        Vector2 mouseScreenPos = inputReader.LookPosition;
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        playerBody.up = new Vector2(mouseWorldPos.x - playerBody.position.x, mouseWorldPos.y - playerBody.position.y);
+        if (IsOwner)
+        {
+            Vector2 mouseScreenPos = inputReader.LookPosition;
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+            playerBody.up = new Vector2(mouseWorldPos.x - playerBody.position.x, mouseWorldPos.y - playerBody.position.y);
+        }
     }
 }

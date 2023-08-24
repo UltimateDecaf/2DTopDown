@@ -24,29 +24,38 @@ public class BulletShooter : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(!IsOwner) return;
-        inputReader.FireEvent += HandleFire;
+        if (IsOwner) 
+        { 
+            inputReader.FireEvent += HandleFire; 
+        }
+        
     }
 
     public override void OnNetworkDespawn()
     {
-        if (!IsOwner) return; 
-        inputReader.FireEvent -= HandleFire;
+        if (IsOwner) 
+        {
+            inputReader.FireEvent -= HandleFire; 
+        }
+        
     }
 
     private void Update()
     {
-        if (!IsOwner) { return; }
+        if (IsOwner && shouldFire) 
+        {
+            if (Time.time > (1 / fireRate) + previousFireTime) 
+            {
+                FireServerRpc(bulletSpawnPoint.position, bulletSpawnPoint.up);
 
-        if (!shouldFire) { return; }
+                SpawnDummyBullet(bulletSpawnPoint.position, bulletSpawnPoint.up);
 
-        if (Time.time < (1 / fireRate) + previousFireTime) { return; }
+                previousFireTime = Time.time;
+            }
+        }
 
-        FireServerRpc(bulletSpawnPoint.position, bulletSpawnPoint.up);
+       
 
-        SpawnDummyBullet(bulletSpawnPoint.position, bulletSpawnPoint.up);
-
-        previousFireTime = Time.time;
     }
     private void HandleFire(bool shouldFire)
     {
@@ -77,9 +86,12 @@ public class BulletShooter : NetworkBehaviour
     [ClientRpc]
     private void SpawnDummyBulletClientRpc(Vector3 spawnPosition, Vector3 direction)
     {
-        if (IsOwner) { return; }
+        if (!IsOwner) 
+        {
+            SpawnDummyBullet(spawnPosition, direction);
+        }
 
-        SpawnDummyBullet(spawnPosition, direction);
+       
     }
     private void SpawnDummyBullet(Vector3 spawnPosition, Vector3 direction)
     {

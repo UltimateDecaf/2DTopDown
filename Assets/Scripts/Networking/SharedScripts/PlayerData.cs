@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class UserData 
+public class PlayerData 
 {
     public string playerName;
+
+    public PlayerData(string playerName)
+    {
+        this.playerName = playerName;
+    }
 }

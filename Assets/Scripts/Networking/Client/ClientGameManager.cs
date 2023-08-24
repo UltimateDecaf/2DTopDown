@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -50,6 +51,12 @@ public class ClientGameManager
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         RelayServerData relayServerData = new RelayServerData(allocation, "udp");
         transport.SetRelayServerData(relayServerData);
+
+        PlayerData playerData = new(PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"));
+    
+        string payload = JsonUtility.ToJson(playerData);
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         NetworkManager.Singleton.StartClient();
     }
