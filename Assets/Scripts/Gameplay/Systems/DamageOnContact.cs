@@ -17,9 +17,13 @@ public class DamageOnContact : MonoBehaviour
     {
         if (collision.attachedRigidbody == null) { return; }
 
+        if (collision.gameObject.CompareTag("Player")) { return; }
         if(collision.attachedRigidbody.TryGetComponent<NetworkObject>(out NetworkObject networkObject))
         {
-            if (ownerClientId == networkObject.OwnerClientId) { return; }
+            if (ownerClientId == networkObject.OwnerClientId && networkObject.gameObject.CompareTag("Player"))
+            { 
+                return; 
+            }
         }
 
         if(collision.attachedRigidbody.TryGetComponent<Health>(out Health health))
