@@ -14,6 +14,7 @@ public class BulletShooter : NetworkBehaviour
     [SerializeField] private GameObject serverBulletPrefab;
     [SerializeField] private GameObject clientBulletPrefab;
     [SerializeField] private Collider2D playerCollider;
+    [SerializeField] private PlayerScore playerScore;
 
     [Header("Gameplay Tweaks")]
     [SerializeField] private float bulletSpeed = 1f;
@@ -72,7 +73,7 @@ public class BulletShooter : NetworkBehaviour
         Physics2D.IgnoreCollision(playerCollider, bulletInstance.GetComponent<Collider2D>());
 
         if(bulletInstance.TryGetComponent<DamageOnContact>(out DamageOnContact damageOnContact)){
-            damageOnContact.SetOwner(OwnerClientId);
+            damageOnContact.SetOwner(OwnerClientId, playerScore);
         }
         
         if (bulletInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))

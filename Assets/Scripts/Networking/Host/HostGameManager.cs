@@ -13,41 +13,40 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HostGameManager
+public class HostGameManager  //this is the game manager on host's side (host is both, client and a server)
 {
     private Allocation allocation;
-    private string joinCode;
+    public string JoinCode { get; private set; }
     private const int MaxConnections = 4;
     private const string GameSceneName = "Game";
-    private NetworkServer networkServer;
+    public NetworkServer NetworkServer { get; private set; }
   public async Task StartHostAsync()
     {
-        try
+        try  //creating an allocation with the set amount of maxconnections
         {
             allocation = await Relay.Instance.CreateAllocationAsync(MaxConnections);
         }
         catch(Exception exception) 
         {
-            Debug.Log(exception);
-            return;
+            Debug.LogError("Relay could not create allocation request " + exception.Message);
+            throw;
         }
 
-        try
+        try //creating a "game room and generating a join code for it"
         {
-            joinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            Debug.Log(joinCode);
+            JoinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Debug.Log(JoinCode);
 
         }
         catch (Exception exception)
         {
-            Debug.Log(exception);
-            return;
+            Debug.LogError("Relay could not create a joincode " + exception.Message);
+            throw;
         }
 
-        UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        RelayServerData relayServerData = new RelayServerData(allocation, "udp");
-        transport.SetRelayServerData(relayServerData);
-        networkServer = new NetworkServer(NetworkManager.Singleton);
+        RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+        NetworkServer = new NetworkServer(NetworkManager.Singleton);
 
         PlayerData playerData = new PlayerData
         {
@@ -62,11 +61,6 @@ public class HostGameManager
         NetworkManager.Singleton.StartHost();
 
         NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
-    }
-
-    public string GetJoinCode()
-    {
-        return joinCode;
     }
 
 }
