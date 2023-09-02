@@ -10,6 +10,7 @@ using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +18,7 @@ public class HostGameManager  //this is the game manager on host's side (host is
 {
     private Allocation allocation;
     public string JoinCode { get; private set; }
-    private const int MaxConnections = 4;
+    public readonly int MaxConnections = 4; 
     private const string GameSceneName = "Game";
     public NetworkServer NetworkServer { get; private set; }
   public async Task StartHostAsync()
