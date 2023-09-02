@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerScore : NetworkBehaviour
 {
     public NetworkVariable<int> score;
+    [SerializeField] private GameObject scoreUI;
     
 
     public override void OnNetworkSpawn()
@@ -15,6 +16,10 @@ public class PlayerScore : NetworkBehaviour
         if (IsServer)
         {
             score.Value = 0;
+        }
+        if (!IsOwner)
+        {
+            scoreUI.SetActive(false);
         }
         
     }

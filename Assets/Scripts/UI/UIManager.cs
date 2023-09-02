@@ -11,6 +11,6 @@ public class UIManager :MonoBehaviour
 
     private void Start()
     { 
-        joinCodeField.text = HostSingleton.Instance.GameManager.JoinCode;
+        joinCodeField.text = "Join code: " + HostSingleton.Instance.GameManager.JoinCode;
     }
 }
