@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoringReferenceBuilder : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Dictionary<ulong, GameObject> ownerIdToPlayerGameObject = new Dictionary<ulong, GameObject>();
     void Start()
     {
         

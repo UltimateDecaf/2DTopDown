@@ -26,10 +26,12 @@ public class SessionLeaderboard : NetworkBehaviour
 
         
     }
-
-    // Update is called once per frame
+  
     void Update()
     {
-        
+        if(players.Length < MaxConnections)
+        {
+            players = GameObject.FindGameObjectsWithTag("Player");
+        }
     }
 }
