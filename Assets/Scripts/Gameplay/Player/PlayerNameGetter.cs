@@ -17,6 +17,7 @@ public class PlayerNameGetter: NetworkBehaviour
                 HostSingleton.Instance.GameManager.NetworkServer.GetPlayerDataUsingClientId(OwnerClientId);
 
             PlayerName.Value = playerData.playerName;
+            Debug.Log("Name in PlayerNameGetter: " +  PlayerName.Value);
         }
     }
 }

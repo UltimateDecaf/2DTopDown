@@ -14,19 +14,22 @@ public class PlayerScore : NetworkBehaviour
    // public NetworkVariable<int> missedShots;
    // public NetworkVariable<int> landedShots;
     public float accuracy;
-    public new FixedString32Bytes name;
+    public FixedString32Bytes playerName;
 
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
             score.Value = 0;
-            name = playerNameGetter.PlayerName.Value;
+            playerName = playerNameGetter.PlayerName.Value;
+            Debug.Log("!!!" + playerNameGetter.PlayerName.Value);
+
         }
         if (!IsOwner)
         {
             scoreUI.SetActive(false);
         }
+        
         
     }
     public override void OnNetworkDespawn()
