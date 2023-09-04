@@ -10,6 +10,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public event Action<bool> FireEvent;
     public event Action<Vector2> MoveEvent;
+    public event Action<bool> ShowLeaderboardEvent;
     public Vector2 LookPosition {  get; private set; } 
 
     private PlayerInput playerInput;
@@ -47,5 +48,16 @@ public class InputReader : ScriptableObject, IPlayerActions
     public void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnUI(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            ShowLeaderboardEvent?.Invoke(true);
+        } else if (context.canceled)
+        {
+            ShowLeaderboardEvent?.Invoke(false);
+        }
     }
 }

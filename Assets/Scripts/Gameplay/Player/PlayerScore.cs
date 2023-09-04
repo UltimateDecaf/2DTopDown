@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,10 +12,10 @@ public class PlayerScore : NetworkBehaviour
     public NetworkVariable<int> score;
     [SerializeField] private GameObject scoreUI;
     [SerializeField] private PlayerNameGetter playerNameGetter; 
-   // public NetworkVariable<int> missedShots;
-   // public NetworkVariable<int> landedShots;
     public float accuracy;
     public FixedString32Bytes playerName;
+
+    public event System.Action OnScoreChanged;
 
     public override void OnNetworkSpawn()
     {
@@ -22,7 +23,6 @@ public class PlayerScore : NetworkBehaviour
         {
             score.Value = 0;
             playerName = playerNameGetter.PlayerName.Value;
-            Debug.Log("!!!" + playerNameGetter.PlayerName.Value);
 
         }
         if (!IsOwner)
@@ -40,6 +40,8 @@ public class PlayerScore : NetworkBehaviour
     public void ModifyPlayerScore(int scoreToAdd)
     {
         score.Value += scoreToAdd;
+
+        OnScoreChanged?.Invoke();
     }
 
 
