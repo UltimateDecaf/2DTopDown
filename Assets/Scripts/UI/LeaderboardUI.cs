@@ -17,19 +17,19 @@ public class LeaderboardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(WaitForSessionLeaderboardInitialization());
+   //     StartCoroutine(WaitForSessionLeaderboardInitialization());
     }
 
-    private IEnumerator WaitForSessionLeaderboardInitialization()
-    {
-        while(SessionLeaderboard.Instance == null)
+   // private IEnumerator WaitForSessionLeaderboardInitialization()
+   // {
+      /*  while(SessionLeaderboard.Instance == null)
         {
             yield return null;  
         }
-
-        SessionLeaderboard.Instance.OnClientConnectedEvent += HandleLeaderboardUI;
-        SessionLeaderboard.Instance.OnClientDisconnectedEvent += HandleLeaderboardUI;
-    }
+      */
+       // SessionLeaderboard.Instance.OnClientConnectedEvent += HandleLeaderboardUI;
+      //  SessionLeaderboard.Instance.OnClientDisconnectedEvent += HandleLeaderboardUI;
+   // }
     public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
    {
         Debug.Log(" Player's Leaderboard UI: UpdateLeaderboardUI called");
@@ -68,7 +68,7 @@ public class LeaderboardUI : MonoBehaviour
 
     public void HandleLeaderboardUI(ulong clientid)
     {
-        SessionLeaderboard.Instance.UpdateLeaderboardUI();
+       // SessionLeaderboard.Instance.UpdateLeaderboardUI();
     }
 
    

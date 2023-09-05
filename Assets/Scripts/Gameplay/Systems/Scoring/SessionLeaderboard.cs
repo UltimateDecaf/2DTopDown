@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class SessionLeaderboard : NetworkBehaviour
 {
-    public static SessionLeaderboard Instance;
+    [SerializeField] private Transform transformToInstantiateRows;
+    [SerializeField] private LeaderboardRow rowPrefab;
     public Dictionary<FixedString32Bytes, PlayerScore> nameToPlayerScores = new Dictionary<FixedString32Bytes, PlayerScore>();
     [SerializeField] private int MaxConnections = 4;
     public Dictionary<NetworkObject, LeaderboardUI> playerToLeaderboardUI = new Dictionary<NetworkObject, LeaderboardUI>();
+    private NetworkList<SessionLeaderboardElement> leaderboardElements;
     public event Action<ulong> OnClientConnectedEvent;
     public event Action<ulong> OnClientDisconnectedEvent;
 
@@ -23,25 +26,75 @@ public class SessionLeaderboard : NetworkBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
+        leaderboardElements = new NetworkList<SessionLeaderboardElement>();
 
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
     public override void OnNetworkSpawn()
     {
+        if (IsClient)
+        {
+            leaderboardElements.OnListChanged += HandleLeaderboardElementsChanged;
+        }
         if (IsServer)
-        {  
+        {
+            Player[] players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            foreach(Player player in players)
+            {
+                HandlePlayerSpawned(player);
+            }
+            Player.OnPlayerSpawned += HandlePlayerSpawned;
+            Player.OnPlayerDespawned += HandlePlayerDespawned;
             UpdatePlayersDictionary();
         }
         
     }
-  
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsClient)
+        {
+            leaderboardElements.OnListChanged -= HandleLeaderboardElementsChanged;
+        } else if (IsServer)
+        {
+            Player.OnPlayerSpawned -= HandlePlayerSpawned;
+            Player.OnPlayerDespawned -= HandlePlayerDespawned;
+        }
+    }
+    private void HandleLeaderboardElementsChanged(NetworkListEvent<SessionLeaderboardElement> changeEvent)
+    {
+        if (changeEvent.Type.Equals(NetworkListEvent<SessionLeaderboardElement>.EventType.Add))
+        {
+            Instantiate(rowPrefab, transformToInstantiateRows);
+
+        }
+        else if (changeEvent.Type.Equals(NetworkListEvent<SessionLeaderboardElement>.EventType.Remove))
+        {
+
+        }
+    }
+
+
+    private void HandlePlayerSpawned(Player player)
+    {
+        leaderboardElements.Add(new SessionLeaderboardElement
+        {
+            PlayerName = player.PlayerName.Value,
+            Score = 0
+        });
+    }
+    private void HandlePlayerDespawned(Player player)
+    {
+        foreach(SessionLeaderboardElement element in leaderboardElements)
+        {
+            if (element.PlayerName.Value.Equals(player.PlayerName.Value))
+            {
+                leaderboardElements.Remove(element);
+                break;
+            }
+        }
+    }
+
+
     void Update()
     {
         if(IsServer)
@@ -69,7 +122,7 @@ public class SessionLeaderboard : NetworkBehaviour
             NetworkObject playerNetworkObject = players[k].GetComponent<NetworkObject>();
             LeaderboardUI playerLeaderboardUI = players[k].GetComponent<LeaderboardUI>();
             if(playerNetworkObject != null || playerLeaderboardUI != null) 
-            { SessionLeaderboard.Instance.RegisterPlayer(playerNetworkObject, playerLeaderboardUI);
+            { // SessionLeaderboard.Instance.RegisterPlayer(playerNetworkObject, playerLeaderboardUI);
             } 
             else
             {

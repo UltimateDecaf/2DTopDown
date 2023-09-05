@@ -21,11 +21,15 @@ public class HostGameManager  //this is the game manager on host's side (host is
     public string JoinCode { get; private set; }
     public readonly int MaxConnections = 4; 
     private const string GameSceneName = "Game";
-    private SessionLeaderboard sessionLeaderboard;
+   // private SessionLeaderboard sessionLeaderboard; //will need to get rid of it, and from ClientGameManager as well
     public NetworkServer NetworkServer { get; private set; }
-
+   // private SessionLeaderboardInitializer sessionLeaderboardInitializer;
    
-
+    public HostGameManager( GameObject sessionLeaderboardPrefab, SessionLeaderboardInitializer initializer)
+    {
+  //      sessionLeaderboardInitializer = initializer;
+  //      sessionLeaderboardInitializer.InstantiateSessionLeaderboard(sessionLeaderboardPrefab);
+    }
 
     public async Task StartHostAsync()
     {
@@ -69,30 +73,30 @@ public class HostGameManager  //this is the game manager on host's side (host is
 
         NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
 
-        CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
+       // CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
    
          NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
 
     }
 
-    private IEnumerator CheckForSessionLeaderboardInitialization()
-    {
-        while (sessionLeaderboard == null)
-        {
-            sessionLeaderboard = SessionLeaderboard.Instance;
-            yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
-        }
-    }
+   // private IEnumerator CheckForSessionLeaderboardInitialization()
+  //  {
+       // while (sessionLeaderboard == null)
+     //   {
+         //   sessionLeaderboard = NetworkServer.sessionLeaderboard;
+         //   yield return new WaitForSeconds(0.1f); 
+        //}
+  //  }
 
     private void OnClientDisconnected(ulong clientId)
     {
-        sessionLeaderboard.ClientDisconnected(clientId);
+      //  sessionLeaderboard.ClientDisconnected(clientId);
     }
 
     private void OnClientConnected(ulong clientId)
     {
-        sessionLeaderboard.ClientConnected(clientId);
+       // sessionLeaderboard.ClientConnected(clientId);
     }
 
 }

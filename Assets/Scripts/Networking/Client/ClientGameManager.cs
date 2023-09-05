@@ -68,7 +68,9 @@ public class ClientGameManager
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         NetworkManager.Singleton.StartClient();
+
         CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
+
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
@@ -77,8 +79,15 @@ public class ClientGameManager
     {
         while (sessionLeaderboard == null)
         {
-            sessionLeaderboard = SessionLeaderboard.Instance;
-            yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
+            Debug.Log("SessionLeaderboard is null, attempting to retrieve it once more");
+            // Check if the GameObject is in the scene.
+            GameObject leaderboardObject = GameObject.Find("SessionLeaderboardManager");
+            if (leaderboardObject != null)
+            {
+                sessionLeaderboard = leaderboardObject.GetComponent<SessionLeaderboard>();
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
     private void OnClientDisconnected(ulong clientId)

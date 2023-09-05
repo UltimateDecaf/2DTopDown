@@ -11,7 +11,7 @@ public class PlayerScore : NetworkBehaviour
 {
     public NetworkVariable<int> score;
     [SerializeField] private GameObject scoreUI;
-    [SerializeField] private PlayerNameGetter playerNameGetter; 
+    [SerializeField] private Player playerInfo; 
     public float accuracy;
     public FixedString32Bytes playerName;
 
@@ -22,7 +22,7 @@ public class PlayerScore : NetworkBehaviour
         if (IsServer)
         {
             score.Value = 0;
-            playerName = playerNameGetter.PlayerName.Value;
+            playerName = playerInfo.PlayerName.Value;
 
         }
         if (!IsOwner)

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerUIShow : NetworkBehaviour
 {
-    [SerializeField] private InputReader inputReader;
+ /*   [SerializeField] private InputReader inputReader;
     [SerializeField] private GameObject LeaderboardUI;
 
     public NetworkObject PlayerNetworkObject => GetComponent<NetworkObject>();  
@@ -48,5 +48,5 @@ public class PlayerUIShow : NetworkBehaviour
             yield return null;
         }
         SessionLeaderboard.Instance.UnregisterPlayer(PlayerNetworkObject);
-    }
+    } */
 }

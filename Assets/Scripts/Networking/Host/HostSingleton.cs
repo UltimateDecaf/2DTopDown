@@ -6,7 +6,8 @@ using UnityEngine;
 public class HostSingleton : MonoBehaviour
 {
     private static HostSingleton instance;
-
+    public GameObject sessionLeaderboardPrefab;
+    public SessionLeaderboardInitializer Initializer;
     public HostGameManager GameManager { get; private set; }
 
     public static HostSingleton Instance 
@@ -34,6 +35,6 @@ public class HostSingleton : MonoBehaviour
 
     public void CreateHost()
     {
-        GameManager = new HostGameManager();
+        GameManager = new HostGameManager(sessionLeaderboardPrefab, Initializer);
     }
 }
