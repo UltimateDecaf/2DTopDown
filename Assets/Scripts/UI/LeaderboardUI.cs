@@ -36,7 +36,7 @@ public class LeaderboardUI : MonoBehaviour
         foreach (Transform child in leaderboardPosition)
         {
             Destroy(child.gameObject);
-
+            
         }
 
         int rank = 1;
