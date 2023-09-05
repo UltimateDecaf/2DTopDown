@@ -32,12 +32,10 @@ public class Health : NetworkBehaviour
     private void EnemyDie(Health health)
     {
         if (!IsServer) { return; }
-        Debug.Log("EnemyDie method invoked");
         if (health.CurrentHealth.Value <= 0)
         {
             if (gameObject.CompareTag("Player"))
-            {
-                Debug.Log("EnemyDie mehtod -- player");
+            { 
                 // isDead = true;
                 gameObject.SetActive(false);
                 gameObject.transform.position = Vector3.zero;
@@ -47,7 +45,6 @@ public class Health : NetworkBehaviour
             }
             else if (gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("EnemyDie method -- enemy");
                 EnemyDieClientRpc();
                 Destroy(gameObject);
 
@@ -82,7 +79,6 @@ public class Health : NetworkBehaviour
         {
             int newHealth = CurrentHealth.Value + value;
             CurrentHealth.Value = Mathf.Clamp(newHealth, 0, MaxHealth);
-            Debug.Log("Changed health of " + this.gameObject.tag);
             if (CurrentHealth.Value == 0)
             {
                 OnDie?.Invoke(this);

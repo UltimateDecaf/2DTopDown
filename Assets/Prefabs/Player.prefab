@@ -4936,6 +4936,7 @@ GameObject:
   - component: {fileID: -2464212923290581537}
   - component: {fileID: 4575625892489044843}
   - component: {fileID: 7455898688999026498}
+  - component: {fileID: 2809383778333302298}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5270,7 +5271,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 989c961ac3556c14ca352540b9da82af, type: 2}
-  LeaderboardUI: {fileID: 2773652654481429182}
+  LeaderboardUI: {fileID: 2349440308781097479}
+--- !u!114 &2809383778333302298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709896868762687879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b81b46024d13a46a7874915432dade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowPrefab: {fileID: 4764922890060009730, guid: 6b8b240f009f8834286bf8d444c8b7ef, type: 3}
+  leaderboardPosition: {fileID: 474982392323177237}
 --- !u!1 &1498805563272527005
 GameObject:
   m_ObjectHideFlags: 0
@@ -5946,14 +5961,13 @@ GameObject:
   - component: {fileID: 2764524384589895397}
   - component: {fileID: 4607785602095413741}
   - component: {fileID: 4943579938591878219}
-  - component: {fileID: 2987540138719871734}
   m_Layer: 5
   m_Name: LeaderboardUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4885006594078599038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6051,20 +6065,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joinCode: 
   joinCodeField: {fileID: 7878750350524102148}
---- !u!114 &2987540138719871734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693240538092823360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b81b46024d13a46a7874915432dade, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rowPrefab: {fileID: 4764922890060009730, guid: 6b8b240f009f8834286bf8d444c8b7ef, type: 3}
-  leaderboardPosition: {fileID: 4885006594078599038}
 --- !u!1 &1870403872216578669
 GameObject:
   m_ObjectHideFlags: 0
@@ -6236,14 +6236,13 @@ GameObject:
   - component: {fileID: 2155533663759786308}
   - component: {fileID: 3331844611488381279}
   - component: {fileID: 2366644976171122703}
-  - component: {fileID: 6658353732353063203}
   m_Layer: 5
   m_Name: Leaderboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2155533663759786308
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6305,20 +6304,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6658353732353063203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2349440308781097479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b81b46024d13a46a7874915432dade, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rowPrefab: {fileID: 4764922890060009730, guid: 6b8b240f009f8834286bf8d444c8b7ef, type: 3}
-  leaderboardPosition: {fileID: 474982392323177237}
 --- !u!1 &2390607111743796850
 GameObject:
   m_ObjectHideFlags: 0
