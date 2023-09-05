@@ -68,19 +68,22 @@ public class ClientGameManager
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         NetworkManager.Singleton.StartClient();
+        sessionLeaderboard = SessionLeaderboard.Instance;
         CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
     private IEnumerator CheckForSessionLeaderboardInitialization()
     {
-        while (sessionLeaderboard == null)
+        while (SessionLeaderboard.Instance == null)
         {
-            sessionLeaderboard = SessionLeaderboard.Instance;
             yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
         }
+
+        sessionLeaderboard = SessionLeaderboard.Instance;
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
+
     private void OnClientDisconnected(ulong clientId)
     {
         sessionLeaderboard.ClientDisconnected(clientId);

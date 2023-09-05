@@ -10,7 +10,6 @@ using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,7 +26,7 @@ public class HostGameManager  //this is the game manager on host's side (host is
    
 
 
-    public async Task StartHostAsync()
+    public async Task StartHostAsync() //this method runs when "Host a Game button is pressed"
     {
         try  //creating an allocation with the set amount of maxconnections
         {
@@ -39,7 +38,7 @@ public class HostGameManager  //this is the game manager on host's side (host is
             throw;
         }
 
-        try //creating a "game room and generating a join code for it"
+        try //creating a "game room" and generating a join code for it
         {
             JoinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
             Debug.Log(JoinCode);
@@ -51,32 +50,32 @@ public class HostGameManager  //this is the game manager on host's side (host is
             throw;
         }
 
-        RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+        RelayServerData relayServerData = new RelayServerData(allocation, "dtls"); //allocate a relay for this room
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-        NetworkServer = new NetworkServer(NetworkManager.Singleton);
+        NetworkServer = new NetworkServer(NetworkManager.Singleton); //network server is created with reference to the networkmanager instance already active
 
-        PlayerData playerData = new PlayerData
+        PlayerData playerData = new PlayerData //creating playerData variable to store player's name and authentication id, data is stored
         {
             playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "NoName"),
             playerAuthId = AuthenticationService.Instance.PlayerId
         };
 
-        string payload = JsonUtility.ToJson(playerData);
+        string payload = JsonUtility.ToJson(playerData); //serialize the data to create a payload
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 
-        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
-        NetworkManager.Singleton.StartHost();
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes; //send the payload
+        NetworkManager.Singleton.StartHost(); //starting host
 
-        NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single); //load the game scene
 
-        CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
+        CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization()); //this is where coroutine to get the sessionleaderboard starts
    
-         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected; //start listening to action, execute OnClientConnected method when action is performed
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected; //start listening to action, execute OnClientDisconnected method when action is performed
 
     }
 
-    private IEnumerator CheckForSessionLeaderboardInitialization()
+    private IEnumerator CheckForSessionLeaderboardInitialization() //try getting sessionLeaderboard instance until it receives one
     {
         while (sessionLeaderboard == null)
         {

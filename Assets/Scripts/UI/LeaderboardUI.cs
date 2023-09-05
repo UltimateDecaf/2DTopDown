@@ -27,8 +27,8 @@ public class LeaderboardUI : MonoBehaviour
             yield return null;  
         }
 
-        SessionLeaderboard.Instance.OnClientConnectedEvent += HandleLeaderboardUI;
-        SessionLeaderboard.Instance.OnClientDisconnectedEvent += HandleLeaderboardUI;
+        SessionLeaderboard.Instance.OnClientConnect += HandleLeaderboardUI;
+        SessionLeaderboard.Instance.OnClientDisconnect -= HandleLeaderboardUI;
     }
     public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
    {

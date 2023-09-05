@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class NetworkClient
 {
+    //this class handles the disconnet of the client
+
     private NetworkManager networkManager;
 
     public NetworkClient(NetworkManager networkManager)

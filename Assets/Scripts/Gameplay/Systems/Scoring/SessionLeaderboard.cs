@@ -13,42 +13,45 @@ public class SessionLeaderboard : NetworkBehaviour
     public Dictionary<FixedString32Bytes, PlayerScore> nameToPlayerScores = new Dictionary<FixedString32Bytes, PlayerScore>();
     [SerializeField] private int MaxConnections = 4;
     public Dictionary<NetworkObject, LeaderboardUI> playerToLeaderboardUI = new Dictionary<NetworkObject, LeaderboardUI>();
-    public event Action<ulong> OnClientConnectedEvent;
-    public event Action<ulong> OnClientDisconnectedEvent;
+    public event Action<ulong> OnClientConnect;
+    public event Action<ulong> OnClientDisconnect;
 
 
 
     //On start, add host to the dictionary
     //On clients connect, add clients to dictionary
 
-    private void Awake()
+    private void Awake() //Awake is the first thing loaded in the scene (???)
     {
         if(Instance == null)
         {
             Instance = this;
+            Debug.Log("Instance of SessionLeaderboard is there!");
 
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
-    public override void OnNetworkSpawn()
+    public override void OnNetworkSpawn() //
     {
         if (IsServer)
-        {  
+        {
             UpdatePlayersDictionary();
         }
-        
+            
+       
     }
   
     void Update()
     {
-        if(IsServer)
+        if (IsServer)
         {
             UpdatePlayersDictionary();
         }
-        
+
+       
     }
 
    void UpdatePlayersDictionary()
@@ -110,12 +113,13 @@ public class SessionLeaderboard : NetworkBehaviour
 
     public void ClientConnected(ulong clientId)
     {
-        OnClientConnectedEvent?.Invoke(clientId);
+        Debug.Log("CLIENT CONNECTED");
+        OnClientConnect?.Invoke(clientId);
     }
 
     public void ClientDisconnected(ulong clientId) 
     { 
-        OnClientDisconnectedEvent?.Invoke(clientId); 
+        OnClientDisconnect?.Invoke(clientId); 
     }
 
     public void RegisterPlayer(NetworkObject playerNetworkObject, LeaderboardUI leaderboardUI)
