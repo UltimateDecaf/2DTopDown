@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
 using UnityEngine;
 
 public class LeaderboardUI : MonoBehaviour
@@ -17,23 +16,13 @@ public class LeaderboardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(WaitForSessionLeaderboardInitialization());
-    }
+        SessionLeaderboard.Instance.OnClientConnectedEvent += UpdateLeaderboardUI;
+        SessionLeaderboard.Instance.OnClientDisconnectedEvent += UpdateLeaderboardUI;
 
-    private IEnumerator WaitForSessionLeaderboardInitialization()
-    {
-        while(SessionLeaderboard.Instance == null)
-        {
-            yield return null;  
-        }
-
-        SessionLeaderboard.Instance.OnClientConnectedEvent += HandleLeaderboardUI;
-        SessionLeaderboard.Instance.OnClientDisconnectedEvent += HandleLeaderboardUI;
     }
     public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
    {
-        Debug.Log(" Player's Leaderboard UI: UpdateLeaderboardUI called");
-        foreach (Transform child in leaderboardPosition)
+        foreach(Transform child in leaderboardPosition)
         {
             Destroy(child.gameObject);
             
@@ -43,7 +32,6 @@ public class LeaderboardUI : MonoBehaviour
         foreach(var scoreData in sortedScores)
         {
             GameObject row = Instantiate(rowPrefab, leaderboardPosition);
-            Debug.Log(row + "INSTANTIATED");
             TMP_Text[] rowTextElements = row.GetComponentsInChildren<TMP_Text>();
             for(int i = 0;  i < rowTextElements.Length; i++)
             {
@@ -59,17 +47,16 @@ public class LeaderboardUI : MonoBehaviour
 
                 if(i == ScoreTextPosition)
                 {
-                   rowTextElements[i].text = scoreData.Value.score.Value.ToString();
+                    scoreData.Value.score.Value.ToString();
                 }
+
+                rank++;
             }
-            rank++;
         }
    }
 
-    public void HandleLeaderboardUI(ulong clientid)
+    public void UpdateLeaderboardUI(ulong clientid)
     {
         SessionLeaderboard.Instance.UpdateLeaderboardUI();
     }
-
-   
 }

@@ -7,16 +7,10 @@ public class ApplicationController : MonoBehaviour
 {
     [SerializeField] private ClientSingleton clientPrefab;
     [SerializeField] private HostSingleton hostPrefab;
-    [SerializeField] private CoroutinePerformer coroutinePerformerPrefab;
 
    private async void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        if(CoroutinePerformer.Instance == null)
-        {
-            Instantiate(coroutinePerformerPrefab);
-        }
 
         await LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
     }

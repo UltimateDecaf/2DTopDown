@@ -18,8 +18,6 @@ public class ClientGameManager
     private NetworkClient networkClient;
     private JoinAllocation allocation;
     private const string MenuSceneName = "Menu";
-    private SessionLeaderboard sessionLeaderboard;
-
     public async Task<bool> InitAsync() 
     {
         await UnityServices.InitializeAsync();
@@ -68,27 +66,5 @@ public class ClientGameManager
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         NetworkManager.Singleton.StartClient();
-        CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
-
-    private IEnumerator CheckForSessionLeaderboardInitialization()
-    {
-        while (sessionLeaderboard == null)
-        {
-            sessionLeaderboard = SessionLeaderboard.Instance;
-            yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
-        }
-    }
-    private void OnClientDisconnected(ulong clientId)
-    {
-        sessionLeaderboard.ClientDisconnected(clientId);
-    }
-
-    private void OnClientConnected(ulong clientId)
-    {
-        sessionLeaderboard.ClientConnected(clientId);
-    }
-
 }
