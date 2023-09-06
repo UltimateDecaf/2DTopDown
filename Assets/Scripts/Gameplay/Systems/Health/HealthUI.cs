@@ -10,6 +10,9 @@ public class HealthUI : NetworkBehaviour
 {
     [SerializeField] private Health health;
     [SerializeField] private Image healthLineImage;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private PlayerScore playerScore;
+    [SerializeField] private TMP_Text scoreGameOverText;
 
     public Action<Health> OnHealthChanged;
 
@@ -29,5 +32,11 @@ public class HealthUI : NetworkBehaviour
     private void HandleHealthChanged(int oldHealth, int newHealth)
     {
         healthLineImage.fillAmount = (float) newHealth / health.MaxHealth;
+        if((float) newHealth / health.MaxHealth <= 0)
+        {
+            gameOverScreen.SetActive(true);
+            scoreGameOverText.text = "Your score: " + playerScore.score.Value;
+
+        }
     }
 }

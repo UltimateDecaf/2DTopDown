@@ -22,17 +22,30 @@ public class NetworkClient
     {
         if (clientId == 0 || clientId == networkManager.LocalClientId)
         {
+            Disconnect();
+        }
+    }
 
-            if (SceneManager.GetActiveScene().name != "Menu")
-            {
-                SceneManager.LoadScene("Menu");
-            }
+    public void Disconnect()
+    {
 
-            if (networkManager.IsConnectedClient)
-            {
-                networkManager.Shutdown();
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            SceneManager.LoadScene("Menu");
+        }
 
-            }
+        if (networkManager.IsConnectedClient)
+        {
+            networkManager.Shutdown();
+
+        }
+    }
+
+    public void Dispose()
+    {
+        if (networkManager != null)
+        {
+            networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         }
     }
 }

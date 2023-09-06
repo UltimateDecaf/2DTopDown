@@ -35,13 +35,8 @@ public class Health : NetworkBehaviour
         if (health.CurrentHealth.Value <= 0)
         {
             if (gameObject.CompareTag("Player"))
-            { 
-                // isDead = true;
-                gameObject.SetActive(false);
-                gameObject.transform.position = Vector3.zero;
-                gameObject.SetActive(true);
-                health.CurrentHealth.Value = 100;
-                isDead = false;
+            {
+
             }
             else if (gameObject.CompareTag("Enemy"))
             {

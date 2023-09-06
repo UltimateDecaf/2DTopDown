@@ -94,4 +94,14 @@ public class ClientGameManager
         sessionLeaderboard.ClientConnected(clientId);
     }
 
+    public void Disconnect()
+    {
+        networkClient.Disconnect();
+    }
+
+    public void Dispose()
+    {
+        networkClient?.Dispose();
+    }
+
 }

@@ -60,4 +60,18 @@ public class NetworkServer
             return null;
         }
     }
+
+    public void Dispose()
+    {
+        if (networkManager == null) { return; }
+
+        networkManager.ConnectionApprovalCallback -= ApprovalCheck;
+        networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
+        networkManager.OnServerStarted -= OnNetworkReady;
+
+        if (networkManager.IsListening)
+        {
+            networkManager.Shutdown();
+        }
+    }
 }

@@ -94,4 +94,13 @@ public class HostGameManager  //this is the game manager on host's side (host is
         sessionLeaderboard.ClientConnected(clientId);
     }
 
+    public void Dispose()
+    {
+        Shutdown();
+    }
+
+    public async void Shutdown()
+    { 
+        NetworkServer?.Dispose();
+    }
 }
