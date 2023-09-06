@@ -1,9 +1,8 @@
-using JetBrains.Annotations;
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
 using UnityEngine;
 
 public class LeaderboardUI : MonoBehaviour
@@ -45,24 +44,29 @@ public class LeaderboardUI : MonoBehaviour
             GameObject row = Instantiate(rowPrefab, leaderboardPosition);
             Debug.Log(row + "INSTANTIATED");
             TMP_Text[] rowTextElements = row.GetComponentsInChildren<TMP_Text>();
-            for(int i = 0;  i < rowTextElements.Length; i++)
+            if (rowTextElements != null)
             {
-                if(i == RankTextPosition)
+                for (int i = 0; i < rowTextElements.Length; i++)
                 {
-                    rowTextElements[i].text = rank.ToString();
-                }
+                    if (i == RankTextPosition)
+                    {
+                        rowTextElements[i].text = rank.ToString();
+                    }
 
-                if(i == NameTextPosition)
-                {
-                    rowTextElements[i].text = scoreData.Key.ToString();
-                }
+                    if (i == NameTextPosition)
+                    {
+                        rowTextElements[i].text = scoreData.Key.ToString();
+                    }
 
-                if(i == ScoreTextPosition)
-                {
-                   rowTextElements[i].text = scoreData.Value.score.Value.ToString();
+                    if (i == ScoreTextPosition)
+                    {
+                        rowTextElements[i].text = scoreData.Value.score.Value.ToString();
+                    }
                 }
+                rank++;
             }
-            rank++;
+            else { Debug.LogWarning("Row Text Elements are null"); }
+            
         }
    }
 
