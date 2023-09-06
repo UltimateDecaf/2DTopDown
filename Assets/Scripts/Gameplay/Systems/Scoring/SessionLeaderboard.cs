@@ -31,7 +31,7 @@ public class SessionLeaderboard : NetworkBehaviour
         }
         else
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
     public override void OnNetworkSpawn() //

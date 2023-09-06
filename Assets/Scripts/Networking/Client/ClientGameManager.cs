@@ -74,7 +74,7 @@ public class ClientGameManager
 
     private IEnumerator CheckForSessionLeaderboardInitialization()
     {
-        while (SessionLeaderboard.Instance == null)
+        while (!CurrentSceneChecker.Instance.GetCurrentSceneName().Equals("Game"))
         {
             yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
         }

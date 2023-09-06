@@ -11,6 +11,7 @@ public class ApplicationController : MonoBehaviour
     [SerializeField] private ClientSingleton clientPrefab;
     [SerializeField] private HostSingleton hostPrefab;
     [SerializeField] private CoroutinePerformer coroutinePerformerPrefab;
+    [SerializeField] private CurrentSceneChecker currentSceneCheckerPrefab;
 
    private async void Start()
     {
@@ -21,6 +22,10 @@ public class ApplicationController : MonoBehaviour
             Instantiate(coroutinePerformerPrefab);
         }
 
+        if (CurrentSceneChecker.Instance == null) //coroutine performer allows using coroutines in regular C# classes, might need it or might delete it later
+        {
+            Instantiate(currentSceneCheckerPrefab);
+        }
         await LaunchInMode();
     }
 
