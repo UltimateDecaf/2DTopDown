@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 1142586659}
   - component: {fileID: 1142586658}
   m_Layer: 0
-  m_Name: EnemySpawn
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1023,8 +1023,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6882431873035988769, guid: 72348b1838f76a64face2d4ed80df921, type: 3}
-  spawnTime: 3
-  subtractionTime: 0.01
+  minX: -40
+  maxX: 40
+  minY: -40
+  maxY: 40
+  spawnTime: 5
+  subtractionTime: 0.5
 --- !u!4 &1142586660
 Transform:
   m_ObjectHideFlags: 0
