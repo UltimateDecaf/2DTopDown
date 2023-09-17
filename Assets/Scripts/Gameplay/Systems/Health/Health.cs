@@ -20,6 +20,7 @@ public class Health : NetworkBehaviour
         {
             CurrentHealth.Value = MaxHealth;
             OnDie += EnemyDie;
+            OnDie += PlayerDie;
         }
     }
     public override void OnNetworkDespawn()
@@ -27,6 +28,7 @@ public class Health : NetworkBehaviour
         if (IsServer)
         {
             OnDie -= EnemyDie;
+            OnDie -= PlayerDie;
         }
     }
     private void EnemyDie(Health health)
@@ -34,14 +36,28 @@ public class Health : NetworkBehaviour
         if (!IsServer) { return; }
         if (health.CurrentHealth.Value <= 0)
         {
-            if (gameObject.CompareTag("Player"))
-            {
-
-            }
-            else if (gameObject.CompareTag("Enemy"))
+            if (gameObject.CompareTag("Enemy"))
             {
                 EnemyDieClientRpc();
                 Destroy(gameObject);
+
+            }
+
+        }
+
+    }
+
+    private void PlayerDie(Health health)
+    {
+        if (!IsServer) { return; }
+        if (health.CurrentHealth.Value <= 0)
+        {
+            if (gameObject.CompareTag("Player"))
+            {
+                BulletShooter shooterScript = gameObject.GetComponent<BulletShooter>();
+                PlayerMovement movement = gameObject.GetComponent<PlayerMovement>();
+                isDead = true;
+                UpdatePlayerScripts(shooterScript, movement);
 
             }
 
@@ -82,6 +98,13 @@ public class Health : NetworkBehaviour
             }
         }
     }
+
+    private void UpdatePlayerScripts(BulletShooter shooter, PlayerMovement movement)
+    {
+        shooter.SetIsDead(isDead);
+        movement.SetIsDead(isDead);
+    }
+
     [ClientRpc]
     void EnemyDieClientRpc()
     {

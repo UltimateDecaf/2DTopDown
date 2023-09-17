@@ -15,11 +15,12 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float speed;
 
     private Vector2 lastMoveInput;
+    private bool isDead;
 
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) {  return; }
-
+        isDead = false;
         inputReader.MoveEvent += HandleMove;
     }
 
@@ -49,5 +50,10 @@ public class PlayerMovement : NetworkBehaviour
     public void HandleMove(Vector2 moveInput)
     {
         lastMoveInput = moveInput;
+    }
+    
+    public void SetIsDead(bool isDead)
+    {
+        this.isDead = isDead;
     }
 }
