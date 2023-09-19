@@ -5,37 +5,59 @@ using UnityEngine;
 
 public class ApplicationController : MonoBehaviour
 {
+  
+     // Based on Nathan Farrer's Project
+     /*
+      * Lari Basangov (me) has added following functionality:
+      * - Instantiation of CoroutinePerformer - script that allows running coroutines in the regular C# classes
+      * - Instantiation of CurrentSceneChecker - script that checks currently loaded scene
+      * 
+      * This functionality is needed to ensure the proper instantiation of the Session leaderboard in-game
+      */
+  
     [SerializeField] private ClientSingleton clientPrefab;
     [SerializeField] private HostSingleton hostPrefab;
+<<<<<<< HEAD
+=======
+    [SerializeField] private CoroutinePerformer coroutinePerformerPrefab;
+    [SerializeField] private CurrentSceneChecker currentSceneCheckerPrefab;
+>>>>>>> sessionleaderboard-fixes
 
    private async void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject); //ensure that the object would not be destroyed in the process
 
+<<<<<<< HEAD
         await LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
+=======
+        if(CoroutinePerformer.Instance == null) //coroutine performer allows using coroutines in regular C# classes, might need it or might delete it later
+        {
+            Instantiate(coroutinePerformerPrefab);
+        }
+
+        if (CurrentSceneChecker.Instance == null)
+        {
+            Instantiate(currentSceneCheckerPrefab);
+        }
+        await LaunchInMode();
+>>>>>>> sessionleaderboard-fixes
     }
 
-    private async Task LaunchInMode(bool isDedicatedServer)
+    private async Task LaunchInMode()
     {
-        if (isDedicatedServer)
+
+        HostSingleton hostSingleton = Instantiate(hostPrefab); //instantiates host game manager
+        hostSingleton.CreateHost();
+        ClientSingleton clientSingleton = Instantiate(clientPrefab); //instantiates client game manager
+
+        bool authenticated = await clientSingleton.CreateClient(); 
+
+        if (authenticated)
         {
+            //by the time main menu is loaded, we have instantiated Host Game Manager and Client Game Manager, they are alreay active
+            clientSingleton.GameManager.GoToMenu();
         }
-        else
-        {
 
-           HostSingleton hostSingleton = Instantiate(hostPrefab);
-           hostSingleton.CreateHost();
-           ClientSingleton clientSingleton = Instantiate(clientPrefab);
-
-           bool authenticated = await clientSingleton.CreateClient();
-
-
-
-            if (authenticated)
-            {
-                clientSingleton.GameManager.GoToMenu();
-            }
-        }
 
     }
 

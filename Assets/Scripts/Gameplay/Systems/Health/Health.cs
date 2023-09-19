@@ -6,6 +6,14 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
+/*
+ Lari Basangov (me) has implemented:
+- EnemyDie();
+- EnemyDieClientRpc();
+- PlayerDie();
+- UpdatePlayerScripts();
+ */
 public class Health : NetworkBehaviour
 {
     [field: SerializeField] public int MaxHealth { get; private set; } = 100;
@@ -20,6 +28,7 @@ public class Health : NetworkBehaviour
         {
             CurrentHealth.Value = MaxHealth;
             OnDie += EnemyDie;
+            OnDie += PlayerDie;
         }
     }
     public override void OnNetworkDespawn()
@@ -27,6 +36,7 @@ public class Health : NetworkBehaviour
         if (IsServer)
         {
             OnDie -= EnemyDie;
+            OnDie -= PlayerDie;
         }
     }
     private void EnemyDie(Health health)
@@ -35,6 +45,7 @@ public class Health : NetworkBehaviour
         Debug.Log("EnemyDie method invoked");
         if (health.CurrentHealth.Value <= 0)
         {
+<<<<<<< HEAD
             if (gameObject.CompareTag("Player"))
             {
                 Debug.Log("EnemyDie mehtod -- player");
@@ -46,10 +57,31 @@ public class Health : NetworkBehaviour
                 isDead = false;
             }
             else if (gameObject.CompareTag("Enemy"))
+=======
+            if (gameObject.CompareTag("Enemy"))
+>>>>>>> sessionleaderboard-fixes
             {
                 Debug.Log("EnemyDie method -- enemy");
                 EnemyDieClientRpc();
                 Destroy(gameObject);
+
+            }
+
+        }
+
+    }
+
+    private void PlayerDie(Health health)
+    {
+        if (!IsServer) { return; }
+        if (health.CurrentHealth.Value <= 0)
+        {
+            if (gameObject.CompareTag("Player"))
+            {
+                BulletShooter shooterScript = gameObject.GetComponent<BulletShooter>();
+                PlayerMovement movement = gameObject.GetComponent<PlayerMovement>();
+                isDead = true;
+                UpdatePlayerScripts(shooterScript, movement);
 
             }
 
@@ -91,6 +123,13 @@ public class Health : NetworkBehaviour
             }
         }
     }
+
+    private void UpdatePlayerScripts(BulletShooter shooter, PlayerMovement movement)
+    {
+        shooter.SetIsDead(isDead);
+        movement.SetIsDead(isDead);
+    }
+
     [ClientRpc]
     void EnemyDieClientRpc()
     {

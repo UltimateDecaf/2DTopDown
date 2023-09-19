@@ -3,32 +3,53 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+//Created by Lari Basangov
+//Spawns enemies in the map within spawnTime rate, which is subtracted each time 10 eneimes have been spawned. The subtraction stops, when the spawn rate has reached its minimal value
 public class EnemySpawn : NetworkBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
-    private Vector3[] spawnPositions = new Vector3[] { new Vector3(-43, -45, 0), new Vector3(0, -49, 0), new Vector3(-45.8f, -45.4f, 0), new Vector3(42.9f, -44.3f, 0) };
-    [SerializeField] private float spawnTime = 10.0f;
-    [SerializeField] private float subtractionTime = 0.01f;
+
+   [SerializeField] private float minX = -40;
+    [SerializeField] private float maxX = 40;
+    [SerializeField] private float minY = -40;
+    [SerializeField] private float maxY = 40;
+    private int enemiesSpawned;
+    [SerializeField] private float spawnTime = 5.0f;
+    [SerializeField] private float subtractionTime = 0.5f;
 
     public override void OnNetworkSpawn()
     {
-        InvokeRepeating("SpawnEnemy", 0.5f, spawnTime);
+        enemiesSpawned = 0;
+        StartCoroutine(SpawnEnemy());
+       
+
     }
-  
-    void SpawnEnemy()
+
+    private IEnumerator SpawnEnemy()
     {
-        if (!IsServer) return;
-        int spawnIndex = Random.Range(0, spawnPositions.Length);
-        GameObject enemy = Instantiate(enemyPrefab, spawnPositions[spawnIndex], Quaternion.identity);
-        enemy.GetComponent<NetworkObject>().Spawn();
-        if(spawnTime > 2f)
+        while(true) 
         {
-            spawnTime -= subtractionTime;
+            float spawnPositionX = Random.Range(minX, maxX);
+            float spawnPositionY = Random.Range(minY, maxY);
+            Vector2 spawnPosition = new Vector2(spawnPositionX, spawnPositionY);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            enemy.GetComponent<NetworkObject>().Spawn();
+            enemiesSpawned++;
+            if (enemiesSpawned > 10)
+            {
+                if (spawnTime > 0.5f)
+                {
+                    spawnTime -= subtractionTime;
+                }
+                else
+                {
+                    spawnTime = 0.5f;
+                }
+                enemiesSpawned = 0;
+            }
+            yield return new WaitForSeconds(spawnTime);
         }
-        else
-        {
-            spawnTime = 3f;
-        }
-    
+      
+     
     }
 }

@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Collections;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
 public class PlayerNameDisplay : MonoBehaviour
 {
     [SerializeField] private PlayerNameGetter nameGetter;

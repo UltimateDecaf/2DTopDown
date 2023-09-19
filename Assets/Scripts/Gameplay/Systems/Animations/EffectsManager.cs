@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+
+//Created by Lari Basangov
 public class EffectsManager : NetworkBehaviour
 {
     [SerializeField] private GameObject enemyDeathParticleEffectPrefab;
     public static EffectsManager Instance;
 
-   
     public override void OnNetworkSpawn()
     {
         Instance = this;

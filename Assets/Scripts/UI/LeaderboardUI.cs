@@ -5,6 +5,8 @@ using TMPro;
 using Unity.Collections;
 using UnityEngine;
 
+//Created by Lari Basangov
+
 public class LeaderboardUI : MonoBehaviour
 {
     [SerializeField] private GameObject rowPrefab;
@@ -19,10 +21,26 @@ public class LeaderboardUI : MonoBehaviour
         SessionLeaderboard.Instance.OnClientConnectedEvent += UpdateLeaderboardUI;
         SessionLeaderboard.Instance.OnClientDisconnectedEvent += UpdateLeaderboardUI;
 
+<<<<<<< HEAD
     }
     public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
    {
         foreach(Transform child in leaderboardPosition)
+=======
+    private IEnumerator WaitForSessionLeaderboardInitialization()
+    {
+        while(SessionLeaderboard.Instance == null)
+        {
+            yield return null;  
+        }
+
+        SessionLeaderboard.Instance.OnClientConnect += HandleLeaderboardUI;
+        SessionLeaderboard.Instance.OnClientDisconnect -= HandleLeaderboardUI;
+    }
+    public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
+   {
+        foreach (Transform child in leaderboardPosition)
+>>>>>>> sessionleaderboard-fixes
         {
             Destroy(child.gameObject);
             

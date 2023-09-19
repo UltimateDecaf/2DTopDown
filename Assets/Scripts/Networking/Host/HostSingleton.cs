@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
 public class HostSingleton : MonoBehaviour
 {
     private static HostSingleton instance;

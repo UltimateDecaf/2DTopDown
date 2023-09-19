@@ -7,12 +7,12 @@ using Unity.Netcode;
 using Unity.Services.Leaderboards;
 using UnityEngine;
 
+//Created by Lari Basangov
 public class PlayerScore : NetworkBehaviour
 {
     public NetworkVariable<int> score;
     [SerializeField] private GameObject scoreUI;
     [SerializeField] private PlayerNameGetter playerNameGetter; 
-    public float accuracy;
     public FixedString32Bytes playerName;
 
     public event System.Action OnScoreChanged;

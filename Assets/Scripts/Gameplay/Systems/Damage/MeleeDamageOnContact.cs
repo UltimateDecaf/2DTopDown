@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+//Created by Lari Basangov
 public class MeleeDamageOnContact : MonoBehaviour
 {
     [SerializeField] private int damage = 5;

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
 public class NetworkServer 
 {
     private NetworkManager networkManager;
@@ -58,6 +59,20 @@ public class NetworkServer
         else
         {
             return null;
+        }
+    }
+
+    public void Dispose()
+    {
+        if (networkManager == null) { return; }
+
+        networkManager.ConnectionApprovalCallback -= ApprovalCheck;
+        networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
+        networkManager.OnServerStarted -= OnNetworkReady;
+
+        if (networkManager.IsListening)
+        {
+            networkManager.Shutdown();
         }
     }
 }

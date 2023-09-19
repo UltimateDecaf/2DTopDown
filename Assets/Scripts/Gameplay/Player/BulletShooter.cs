@@ -21,12 +21,14 @@ public class BulletShooter : NetworkBehaviour
     [SerializeField] private float fireRate;
 
     private bool shouldFire;
+    private bool isDead;
     private float previousFireTime;
 
     public override void OnNetworkSpawn()
     {
         if (IsOwner) 
-        { 
+        {
+            isDead = false;
             inputReader.FireEvent += HandleFire; 
         }
         
@@ -43,7 +45,7 @@ public class BulletShooter : NetworkBehaviour
 
     private void Update()
     {
-        if (IsOwner && shouldFire) 
+        if (IsOwner && shouldFire && !isDead) 
         {
             if (Time.time > (1 / fireRate) + previousFireTime) 
             {
@@ -52,6 +54,8 @@ public class BulletShooter : NetworkBehaviour
                 SpawnDummyBullet(bulletSpawnPoint.position, bulletSpawnPoint.up);
 
                 previousFireTime = Time.time;
+
+                Debug.Log(Time.time);
             }
         }
 
@@ -106,5 +110,9 @@ public class BulletShooter : NetworkBehaviour
         {
             rb.velocity = rb.transform.up * bulletSpeed;
         }
+    }
+
+    public void SetIsDead(bool isDead) { 
+        this.isDead = isDead;
     }
 }

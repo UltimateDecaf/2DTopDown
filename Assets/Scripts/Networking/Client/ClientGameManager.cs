@@ -66,5 +66,44 @@ public class ClientGameManager
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         NetworkManager.Singleton.StartClient();
+<<<<<<< HEAD
     }
+=======
+        sessionLeaderboard = SessionLeaderboard.Instance;
+        CoroutinePerformer.Instance.StartCoroutine(CheckForSessionLeaderboardInitialization());
+    }
+
+    private IEnumerator CheckForSessionLeaderboardInitialization()
+    {
+        while (!CurrentSceneChecker.Instance.GetCurrentSceneName().Equals("Game"))
+        {
+            yield return new WaitForSeconds(0.1f); // wait for a short time before checking again
+        }
+
+        sessionLeaderboard = SessionLeaderboard.Instance;
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+    }
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        sessionLeaderboard.ClientDisconnected(clientId);
+    }
+
+    private void OnClientConnected(ulong clientId)
+    {
+        sessionLeaderboard.ClientConnected(clientId);
+    }
+
+    public void Disconnect()
+    {
+        networkClient.Disconnect();
+    }
+
+    public void Dispose()
+    {
+        networkClient?.Dispose();
+    }
+
+>>>>>>> sessionleaderboard-fixes
 }

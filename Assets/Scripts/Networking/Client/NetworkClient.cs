@@ -4,8 +4,11 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//From Nathan Farrer's project
 public class NetworkClient
 {
+    //this class handles the disconnet of the client
+
     private NetworkManager networkManager;
 
     public NetworkClient(NetworkManager networkManager)
@@ -20,17 +23,30 @@ public class NetworkClient
     {
         if (clientId == 0 || clientId == networkManager.LocalClientId)
         {
+            Disconnect();
+        }
+    }
 
-            if (SceneManager.GetActiveScene().name != "Menu")
-            {
-                SceneManager.LoadScene("Menu");
-            }
+    public void Disconnect()
+    {
 
-            if (networkManager.IsConnectedClient)
-            {
-                networkManager.Shutdown();
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            SceneManager.LoadScene("Menu");
+        }
 
-            }
+        if (networkManager.IsConnectedClient)
+        {
+            networkManager.Shutdown();
+
+        }
+    }
+
+    public void Dispose()
+    {
+        if (networkManager != null)
+        {
+            networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         }
     }
 }

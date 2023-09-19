@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//Based on Nathan Farrer's project
 public class NameSelector : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameField;
