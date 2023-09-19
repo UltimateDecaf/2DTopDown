@@ -6,6 +6,7 @@ using Unity.Services.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Created by Nathan Farrer
 public static class AuthenticationWrapper 
 {
     public static AuthState AuthState { get; private set; } = AuthState.NotAuthenticated;

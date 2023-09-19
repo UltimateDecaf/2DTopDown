@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class ApplicationController : MonoBehaviour
 {
-    /*<summary>
-     * ApplicationController handles creation of client's and host's gamemanagers during networkboot scene. 
-    </summary>*/
+  
+     // Based on Nathan Farrer's Project
+     /*
+      * Lari Basangov (me) has added following functionality:
+      * - Instantiation of CoroutinePerformer - script that allows running coroutines in the regular C# classes
+      * - Instantiation of CurrentSceneChecker - script that checks currently loaded scene
+      * 
+      * This functionality is needed to ensure the proper instantiation of the Session leaderboard in-game
+      */
+  
     [SerializeField] private ClientSingleton clientPrefab;
     [SerializeField] private HostSingleton hostPrefab;
     [SerializeField] private CoroutinePerformer coroutinePerformerPrefab;
@@ -22,7 +29,7 @@ public class ApplicationController : MonoBehaviour
             Instantiate(coroutinePerformerPrefab);
         }
 
-        if (CurrentSceneChecker.Instance == null) //coroutine performer allows using coroutines in regular C# classes, might need it or might delete it later
+        if (CurrentSceneChecker.Instance == null)
         {
             Instantiate(currentSceneCheckerPrefab);
         }

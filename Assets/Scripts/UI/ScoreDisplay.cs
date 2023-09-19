@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+//Created by Lari Basangov
 public class ScoreDisplay : MonoBehaviour
 {
     public int previousScore;

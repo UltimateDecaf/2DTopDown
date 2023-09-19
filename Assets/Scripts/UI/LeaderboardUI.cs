@@ -6,6 +6,8 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
+//Created by Lari Basangov
+
 public class LeaderboardUI : MonoBehaviour
 {
     [SerializeField] private GameObject rowPrefab;
@@ -32,7 +34,6 @@ public class LeaderboardUI : MonoBehaviour
     }
     public void UpdateLeaderboardUI(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
    {
-        Debug.Log(" Player's Leaderboard UI: UpdateLeaderboardUI called");
         foreach (Transform child in leaderboardPosition)
         {
             Destroy(child.gameObject);
@@ -43,7 +44,6 @@ public class LeaderboardUI : MonoBehaviour
         foreach(var scoreData in sortedScores)
         {
             GameObject row = Instantiate(rowPrefab, leaderboardPosition);
-            Debug.Log(row + "INSTANTIATED");
             TMP_Text[] rowTextElements = row.GetComponentsInChildren<TMP_Text>();
             for(int i = 0;  i < rowTextElements.Length; i++)
             {

@@ -7,6 +7,8 @@ using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 using UnityEngine.Events;
 
+//SessionLeaderboard class is a singleton that updates players' scores and updates leaderboard UI for all players
+//Created by Lari Basangov
 public class SessionLeaderboard : NetworkBehaviour
 {
     public static SessionLeaderboard Instance;
@@ -21,12 +23,11 @@ public class SessionLeaderboard : NetworkBehaviour
     //On start, add host to the dictionary
     //On clients connect, add clients to dictionary
 
-    private void Awake() //Awake is the first thing loaded in the scene (???)
+    private void Awake() 
     {
         if(Instance == null)
         {
             Instance = this;
-            Debug.Log("Instance of SessionLeaderboard is there!");
 
         }
         else
@@ -34,7 +35,7 @@ public class SessionLeaderboard : NetworkBehaviour
             Destroy(gameObject);
         }
     }
-    public override void OnNetworkSpawn() //
+    public override void OnNetworkSpawn() 
     {
         if (IsServer)
         {
@@ -91,7 +92,6 @@ public class SessionLeaderboard : NetworkBehaviour
         List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores = new List<KeyValuePair<FixedString32Bytes, PlayerScore>>(nameToPlayerScores);
 
         sortedScores.Sort((pair1, pair2) => pair2.Value.score.Value.CompareTo(pair1.Value.score.Value));
-        Debug.Log("Sorted Scores Count: " + sortedScores.Count);
 
         UpdatePlayersLeaderboards(sortedScores);
      
@@ -113,7 +113,6 @@ public class SessionLeaderboard : NetworkBehaviour
 
     public void ClientConnected(ulong clientId)
     {
-        Debug.Log("CLIENT CONNECTED");
         OnClientConnect?.Invoke(clientId);
     }
 
@@ -124,7 +123,6 @@ public class SessionLeaderboard : NetworkBehaviour
 
     public void RegisterPlayer(NetworkObject playerNetworkObject, LeaderboardUI leaderboardUI)
     {
-        Debug.Log("RegisterPlayer called with NetworkObject: " + playerNetworkObject + " and LeaderboardUI: " + leaderboardUI);
         if (!playerToLeaderboardUI.ContainsKey(playerNetworkObject))
         {
             playerToLeaderboardUI.Add(playerNetworkObject, leaderboardUI);
@@ -138,20 +136,16 @@ public class SessionLeaderboard : NetworkBehaviour
 
     public void UpdatePlayersLeaderboards(List<KeyValuePair<FixedString32Bytes, PlayerScore>> sortedScores)
     {
-        Debug.Log("Session Leaderboard: UpdatePlayerLeaderboards called");
+   
         if(playerToLeaderboardUI.Count > 0) 
         {
-            Debug.Log("playerToLeaderboardUI.Count is greater than 0");
             foreach (var entry in playerToLeaderboardUI)
             {
-                Debug.Log("Iteration x to update player's leaderboard");
-
                 LeaderboardUI playerLeaderboardUI = entry.Value;
-                if(playerLeaderboardUI != null)
+                if (playerLeaderboardUI != null)
                 {
-                     playerLeaderboardUI.UpdateLeaderboardUI(sortedScores);
+                    playerLeaderboardUI.UpdateLeaderboardUI(sortedScores);
                 }
-                Debug.Log("Your dictionary seem to have null values");
                
             }
         }

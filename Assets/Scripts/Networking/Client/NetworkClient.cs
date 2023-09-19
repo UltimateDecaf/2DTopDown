@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//From Nathan Farrer's project
 public class NetworkClient
 {
     //this class handles the disconnet of the client

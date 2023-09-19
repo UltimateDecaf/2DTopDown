@@ -6,6 +6,14 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
+/*
+ Lari Basangov (me) has implemented:
+- EnemyDie();
+- EnemyDieClientRpc();
+- PlayerDie();
+- UpdatePlayerScripts();
+ */
 public class Health : NetworkBehaviour
 {
     [field: SerializeField] public int MaxHealth { get; private set; } = 100;

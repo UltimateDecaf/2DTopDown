@@ -5018,7 +5018,6 @@ MonoBehaviour:
     m_InternalValue: 0
   scoreUI: {fileID: 4405554097434133171}
   playerNameGetter: {fileID: -2464212923290581537}
-  accuracy: 0
   playerName:
     utf8LengthInBytes: 0
     bytes:

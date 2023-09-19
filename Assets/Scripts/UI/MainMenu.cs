@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Based on Nathan Farrer's project
 public class MainMenu : MonoBehaviour
 {
 

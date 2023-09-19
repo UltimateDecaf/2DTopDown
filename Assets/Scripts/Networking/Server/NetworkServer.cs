@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 
+//Based on Nathan Farrer's project
 public class NetworkServer 
 {
     private NetworkManager networkManager;

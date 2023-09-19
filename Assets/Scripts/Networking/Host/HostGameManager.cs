@@ -14,6 +14,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Based on Nathan Farrer's project
+/*Lari Basangov has implemented all the code related to the sessionLeaderboard
+ CheckForSessionLeaderboardInitialization() 
+ */
 public class HostGameManager  //this is the game manager on host's side (host is both, client and a server)
 {
     private Allocation allocation;
@@ -28,7 +32,7 @@ public class HostGameManager  //this is the game manager on host's side (host is
 
     public async Task StartHostAsync() //this method runs when "Host a Game button is pressed"
     {
-        try  //creating an allocation with the set amount of maxconnections
+        try  //creating an allocation with the set amount of max connections
         {
             allocation = await Relay.Instance.CreateAllocationAsync(MaxConnections);
         }
