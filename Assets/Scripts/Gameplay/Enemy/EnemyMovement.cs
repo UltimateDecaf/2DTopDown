@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Created by Lari Basangov
+
+//This script makes sure that each enemy follows the player
 public class EnemyMovement : NetworkBehaviour
 {
     [SerializeField] private float speed;
@@ -13,7 +17,6 @@ public class EnemyMovement : NetworkBehaviour
     private Vector2 currentPlayerPosition;
 
 
-    // Start is called before the first frame update
     void Awake()
     {
         currentPlayerPosition = Vector2.zero;
@@ -21,13 +24,13 @@ public class EnemyMovement : NetworkBehaviour
         player = GameObject.Find("Player(Clone)");
     }
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         currentPlayerPosition = GetCurrentPlayerPosition();
         MoveEnemy();
         RotateToPlayer();
-      //  Debug.Log("Player now at x: " + currentPlayerPosition.x + " y: " + currentPlayerPosition.y);
+
     }
 
     Vector2 GetCurrentPlayerPosition() 

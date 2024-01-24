@@ -6,7 +6,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//Based on Nathan Farrer's project
+//Based on Nathan Farrer's 'Health.cs' script: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer/-/blob/main/Assets/Scripts/Core/Combat/Health.cs?ref_type=heads
 /*
  Lari Basangov (me) has implemented:
 - EnemyDie();

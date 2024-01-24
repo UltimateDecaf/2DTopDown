@@ -6,6 +6,13 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Based on Nathan Farrer's 'HealthDisplay.cs' script: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer/-/blob/main/Assets/Scripts/Core/Combat/HealthDisplay.cs?ref_type=heads
+
+/* Lari Basangov's addition:
+ * - Game Over screen is enabled upon losing all health.
+ */
+
+// This screen updates health UI, and toggles the game over screen upon losing all health.
 public class HealthUI : NetworkBehaviour
 {
     [SerializeField] private Health health;

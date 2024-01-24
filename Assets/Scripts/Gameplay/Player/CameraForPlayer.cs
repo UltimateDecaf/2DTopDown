@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+// Based on Nathan Farrer's Unity Multiplayer Project: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer
+
+// This script ensures that player is following their avatar, and not the other players
+// by increasing Cinemachine's Virtual Camera priority.
 public class CameraForPlayer : NetworkBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera virtualCamera;

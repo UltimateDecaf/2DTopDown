@@ -7,8 +7,10 @@ using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 using UnityEngine.Events;
 
-//SessionLeaderboard class is a singleton that updates players' scores and updates leaderboard UI for all players
+
 //Created by Lari Basangov
+//SessionLeaderboard class is a singleton that updates players' scores and updates leaderboard UI for all players
+
 public class SessionLeaderboard : NetworkBehaviour
 {
     public static SessionLeaderboard Instance;

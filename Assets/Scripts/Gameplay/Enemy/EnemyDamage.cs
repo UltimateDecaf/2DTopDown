@@ -2,27 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by Lari Basangov
+
+//This script sends massage to register damage to the player upon collision with them
 public class EnemyDamage : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] int damage;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             GameObject gameObject = collision.gameObject;
-            gameObject.SendMessage("GiveDamage", 5);
+            gameObject.SendMessage("GiveDamage", damage);
         }
     }
 }

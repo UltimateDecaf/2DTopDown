@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+// Based on Nathan Farrer's 'ProjectileLauncher.cs' script: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer/-/blob/main/Assets/Scripts/Core/Player/ProjectileLauncher.cs?ref_type=heads 
+
+/*
+ Lari Basangov's addition:
+- Communicating with 'DamageOnContact.cs' script to register the addition to the player score
+ */
+
+//This script is design to run the bullet's logic on the server side, while rendering the image on the client side.
+//It is achieved by RPCs and using a separate prefab for a "server" bullet (no rendering), and a "client" bullet prefas.
 public class BulletShooter : NetworkBehaviour
 {
-
-    //bullets do not render properly on the host's side!!!
 
     [Header("References")]
     [SerializeField] private InputReader inputReader;

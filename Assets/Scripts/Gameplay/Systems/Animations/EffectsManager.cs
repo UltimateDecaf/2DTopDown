@@ -5,6 +5,8 @@ using UnityEngine;
 
 
 //Created by Lari Basangov
+
+//This script instantiatess a particle effect prefab after killing an enemy, then it is destroyed. 
 public class EffectsManager : NetworkBehaviour
 {
     [SerializeField] private GameObject enemyDeathParticleEffectPrefab;

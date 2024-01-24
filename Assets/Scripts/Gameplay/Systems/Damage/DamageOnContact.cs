@@ -4,6 +4,11 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Based on Nathan Farrer's 'DealDamageOnContact.cs' script: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer/-/blob/main/Assets/Scripts/Core/Combat/DealDamageOnContact.cs?ref_type= 
+/*
+ Lari Basangov's addition:
+- Adding the logic for adding score to the player upon dealing damage
+ */
 public class DamageOnContact : MonoBehaviour
 {
     [SerializeField] private int damage = 5;

@@ -5,7 +5,9 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//Based on Nathan Farrer's project
+//Based on Nathan Farrer's 'MainMenu.cs' script: https://gitlab.com/GameDevTV/unity-multiplayer/unity-multiplayer/-/blob/main/Assets/Scripts/UI/MainMenu.cs?ref_type=heads
+
+// This script has methods that are used by main menu buttons.
 public class MainMenu : MonoBehaviour
 {
 

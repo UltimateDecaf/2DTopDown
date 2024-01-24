@@ -8,6 +8,9 @@ using Unity.Services.Leaderboards;
 using UnityEngine;
 
 //Created by Lari Basangov
+
+// This script holds the player's score, as well as the name.
+//TODO: fix the script so that it deals only with scores, not with player names
 public class PlayerScore : NetworkBehaviour
 {
     public NetworkVariable<int> score;
